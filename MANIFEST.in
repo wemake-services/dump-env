@@ -1,0 +1,2 @@
+recursive-include dump_env *.py
+include LICENSE README.rst
