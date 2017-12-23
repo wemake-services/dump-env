@@ -22,7 +22,7 @@ with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='dump-env',
-    version='0.0.1',
+    version='0.1.0',
     description='A utility tool to create .env files',
     long_description=long_description,
     author='Nikita Sobolev',
