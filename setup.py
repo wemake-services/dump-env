@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Note: To use the 'upload' functionality of this file, you must:
-#   $ pip install twine
-
 import io
 import os
 
@@ -22,7 +19,7 @@ with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='dump-env',
-    version='0.1.0',
+    version='0.1.1',
     description='A utility tool to create .env files',
     long_description=long_description,
     author='Nikita Sobolev',
@@ -36,7 +33,7 @@ setup(
 
     license='MIT',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',

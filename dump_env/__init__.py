@@ -48,7 +48,7 @@ def _preload_existing_vars(prefix):
             # Skip vars with no prefix.
             continue
 
-        prefixed[key.replace(prefix, '')] = value
+        prefixed[key.replace(prefix, '', 1)] = value
 
     return prefixed
 

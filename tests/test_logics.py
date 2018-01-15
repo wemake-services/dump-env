@@ -70,3 +70,38 @@ class TestDump(object):
         assert list(result.keys()) == ['NORMAL_KEY', 'key']
         assert result['key'] == 'value'
         assert result['NORMAL_KEY'] == 'SOMEVALUE'
+
+
+@pytest.mark.usefixtures('monkeypatch', 'env_file')
+class TestDumpRegression(object):
+    @staticmethod
+    def same_environ():
+        return {
+            'NORMAL_KEY': 'test',
+        }
+
+    @staticmethod
+    def multiple_prefix():
+        return {
+            'SECRET_DJANGO_SECRET_KEY': 'test',
+            'SECRET_SECRET_VALUE': 'value',
+        }
+
+    def test_same_environ(self, monkeypatch, env_file):
+        monkeypatch.setattr(
+            dump_env, 'environ', self.same_environ(),
+        )
+        result = dump(template=env_file)
+
+        # Should contain the value from env, not from template:
+        assert result['NORMAL_KEY'] == 'test'
+
+    def test_multiple_prefix(self, monkeypatch, env_file):
+        monkeypatch.setattr(
+            dump_env, 'environ', self.multiple_prefix(),
+        )
+        result = dump(template=env_file, prefix='SECRET_')
+
+        # Only prefix should be changed, other parts should not:
+        assert result['DJANGO_SECRET_KEY'] == 'test'
+        assert result['SECRET_VALUE'] == 'value'
