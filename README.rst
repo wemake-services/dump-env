@@ -18,6 +18,13 @@ A utility tool to create ``.env`` files
 
 ``dump-env`` takes an ``.env.template`` file and some optional environmental variables to create a new ``.env`` file from these two sources.
 
+Why?
+~~~~
+
+Why do we need such a tool? Well, this tool is very helpful when your CI is building ``docker`` (or other) images.
+`Previously <https://github.com/wemake-services/wemake-django-template/blob/6a7ab060e8435fd855cd806706c5d1b5a9e76d12/%7B%7Bcookiecutter.project_name%7D%7D/.gitlab-ci.yml#L25>`_ we had some complex logic of encrypting and decrypting files, importing secret keys and so on.
+Now we can just create secret variables for our CI, add some prefix to it, and use ``dump-env`` to make our life easier.
+
 Quickstart
 ~~~~~~~~~~
 
@@ -43,13 +50,6 @@ Installation
 .. code:: bash
 
     $ pip install dump-env
-
-Why?
-~~~~
-
-Why do we need such a tool? Well, this tool is very helpful when your CI is building ``docker`` (or other) images.
-`Previously <https://github.com/wemake-services/wemake-django-template/blob/6a7ab060e8435fd855cd806706c5d1b5a9e76d12/%7B%7Bcookiecutter.project_name%7D%7D/.gitlab-ci.yml#L25>`_ we had some complex logic of encrypting and decrypting files, importing secret keys and so on.
-Now we can just create secret variables for our CI, add some prefix to it, and use ``dump-env`` to make our life easier.
 
 Creating secret variables in some CIs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
