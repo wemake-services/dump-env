@@ -1,5 +1,15 @@
 # dump-env changelog
 
+## Version 0.2.0
+
+### Features
+
+- Refactors `Env` class to be a function
+- We are now using `python3.5` for tests
+- We are now using `md` version of `README` file. New PyPI allows that!
+- Updates how linting works
+
+
 ## Version 0.1.1
 
 ### Bugfixes:

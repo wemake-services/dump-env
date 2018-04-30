@@ -39,4 +39,4 @@ def main():
     variables = dump(args.template, args.prefix)
 
     for key, value in variables.items():
-        print('{}={}'.format(key, value))
+        print('{0}={1}'.format(key, value))

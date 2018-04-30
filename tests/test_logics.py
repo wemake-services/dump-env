@@ -3,25 +3,24 @@
 import pytest
 
 import dump_env
-from dump_env import Env, dump
+from dump_env import dump, parse
 
 
-@pytest.fixture(scope='session')
-def env(env_file):
-    return Env(env_file)
+@pytest.mark.usefixtures('env_file')
+class TestParse(object):
+    def test_parse_normal(self, env_file):
+        parsed_data = parse(env_file)
 
+        assert isinstance(parsed_data, dict)
+        assert 'NORMAL_KEY' in parsed_data
+        assert parsed_data['NORMAL_KEY'] == 'SOMEVALUE'
 
-@pytest.mark.usefixtures('env')
-class TestEnv(object):
-    def test_env_normal(self, env):
-        assert isinstance(env.data, dict)
-        assert 'NORMAL_KEY' in env.data
-        assert env.data['NORMAL_KEY'] == 'SOMEVALUE'
+    def test_parse_exceptions(self, env_file):
+        parsed_data = parse(env_file)
 
-    def test_env_exceptions(self, env):
-        assert isinstance(env.data, dict)
-        assert 'COMMENTED_KEY' not in env.data
-        assert 'KEY_WITH_NO_ASSIGNMENT' not in env.data
+        assert isinstance(parsed_data, dict)
+        assert 'COMMENTED_KEY' not in parsed_data
+        assert 'KEY_WITH_NO_ASSIGNMENT' not in parsed_data
 
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
@@ -29,7 +28,7 @@ class TestDump(object):
     @staticmethod
     def simple_environ(prefix=''):
         return {
-            '{}key'.format(prefix): 'value',
+            '{0}key'.format(prefix): 'value',
             'a': 'b',
         }
 

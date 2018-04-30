@@ -4,35 +4,33 @@ from os import environ
 from collections import OrderedDict
 
 
-class Env(object):
+def parse(source):
     """
-    Retrieves option keys from .env files.
+    Reads the source `.env` file and load key-values.
 
-    This module is used just as parser and storage.
+    Args:
+        source (str): `.env` template filepath
+
+    Returns:
+
     """
+    parsed_data = {}
 
-    def __init__(self, source):
-        """Reads the source file and load key-values."""
-        self.source = source
-        self.data = {}
-        self._parse()
+    with open(source) as file_:
+        for line in file_:
+            line = line.strip()
 
-    def _parse(self):
-        with open(self.source) as file_:
-            for line in file_:
-                line = line.strip()
+            if not line or line.startswith('#') or '=' not in line:
+                # Ignore comments and lines without assignment.
+                continue
 
-                if not line or line.startswith('#') or '=' not in line:
-                    # Ignore comments and lines without assignment.
-                    continue
+            # Remove whitespaces and quotes:
+            key, value = line.split('=', 1)
+            key = key.strip()
+            value = value.strip().strip('\'"')
+            parsed_data[key] = value
 
-                # Remove whitespaces and quotes:
-                key, value = line.split('=', 1)
-                key = key.strip()
-                value = value.strip().strip('\'"')
-
-                # Store the result:
-                self.data[key] = value
+    return parsed_data
 
 
 def _preload_existing_vars(prefix):
@@ -75,7 +73,7 @@ def dump(template='', prefix=''):
 
     if template:
         # Loading env values from template file:
-        store.update(Env(template).data)
+        store.update(parse(template))
 
     # Loading env variables from `os.environ`:
     store.update(_preload_existing_vars(prefix))
