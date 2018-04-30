@@ -1,6 +1,6 @@
 # A utility tool to create ``.env`` files
 
-[![Build Status](https://travis-ci.org/sobolevn/dump-env.svg?branch=master)](https://travis-ci.org/sobolevn/dump-env) [![Coverage](https://coveralls.io/repos/github/sobolevn/dump-env/badge.svg?branch=master)](https://coveralls.io/github/sobolevn/dump-env?branch=master) [![Python Version](https://img.shields.io/pypi/pyversions/dump-env.svg)](https://https://pypi.org/project/dump-env/) [![Docs](https://readthedocs.org/projects/dump-env/badge/?version=latest)](http://dump-env.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/sobolevn/dump-env.svg?branch=master)](https://travis-ci.org/sobolevn/dump-env) [![Coverage](https://coveralls.io/repos/github/sobolevn/dump-env/badge.svg?branch=master)](https://coveralls.io/github/sobolevn/dump-env?branch=master) [![Python Version](https://img.shields.io/pypi/pyversions/dump-env.svg)](https://pypi.org/project/dump-env/) [![Docs](https://readthedocs.org/projects/dump-env/badge/?version=latest)](http://dump-env.readthedocs.io/en/latest/?badge=latest)
 
 `dump-env` takes an `.env.template` file and some optional environmental variables to create a new `.env` file from these two sources. No external dependencies are used.
 
