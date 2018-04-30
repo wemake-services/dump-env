@@ -4,7 +4,9 @@
 
 ### Bugfixes
 
-- Adds `long_description_content_type` to `setup()`, now hopefully readme will show up
+- Fixes `pypi` readme rendering by providing `pypandoc`
+- Changes how version are deployed from `travis`
+- `wheel` is now universal
 
 
 ## Version 0.2.0

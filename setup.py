@@ -6,23 +6,26 @@ import os
 
 from setuptools import find_packages, setup
 
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except (IOError, ImportError) as ex:
+    print("Pandoc failed", ex)
+    # Import the README and use it as the long-description.
+    # Note: this will only work if 'README.rst' is
+    # present in your MANIFEST.in file!
+    with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+        long_description = f.read()
+
 REQUIRED = []
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-# Import the README and use it as the long-description.
-# Note: this will only work if 'README.rst' is
-# present in your MANIFEST.in file!
-with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = '\n' + f.read()
-
-
 setup(
     name='dump-env',
-    version='0.2.0',
+    version='0.2.1',
     description='A utility tool to create .env files',
     long_description=long_description,
-    long_description_content_type='text/markdown',
     author='Nikita Sobolev',
     author_email='mail@sobolenv.me',
     url='https://github.com/sobolevn/dump-env',
