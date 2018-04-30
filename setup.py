@@ -30,6 +30,7 @@ setup(
 
     install_requires=REQUIRED,
     include_package_data=True,
+    zip_safe=False,
 
     license='MIT',
     classifiers=[
@@ -44,6 +45,13 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
+    ],
+    keywords=[
+        'dotenv',
+        '.env',
+        'tempaltes',
+        'secrets',
+        'CI/CD',
     ],
 
     entry_points={
