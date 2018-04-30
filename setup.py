@@ -12,7 +12,7 @@ try:
     import pypandoc
     long_description = pypandoc.convert('README.md', 'rst')
 except (IOError, ImportError) as ex:
-    print("Pandoc failed", ex)
+    print('Pandoc failed', ex)
     # Import the README and use it as the long-description.
     # Note: this will only work if 'README.rst' is
     # present in your MANIFEST.in file!

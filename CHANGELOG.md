@@ -2,6 +2,10 @@
 
 ## Version 0.2.1
 
+### Features
+
+- Adds `pyroma` to check package metadata
+
 ### Bugfixes
 
 - Fixes `pypi` readme rendering by providing `pypandoc`
