@@ -22,6 +22,7 @@ setup(
     version='0.2.0',
     description='A utility tool to create .env files',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Nikita Sobolev',
     author_email='mail@sobolenv.me',
     url='https://github.com/sobolevn/dump-env',

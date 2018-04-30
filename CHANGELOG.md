@@ -1,5 +1,12 @@
 # dump-env changelog
 
+## Version 0.2.1
+
+### Bugfixes
+
+- Adds `long_description_content_type` to `setup()`, now hopefully readme will show up
+
+
 ## Version 0.2.0
 
 ### Features
@@ -12,7 +19,7 @@
 
 ## Version 0.1.1
 
-### Bugfixes:
+### Bugfixes
 
 - Fixes [#1](https://github.com/sobolevn/dump-env/issues/1) when prefix was replaced multiple times in a string
 
