@@ -6,6 +6,8 @@ import os
 
 from setuptools import find_packages, setup
 
+here = os.path.abspath(os.path.dirname(__file__))
+
 try:
     import pypandoc
     long_description = pypandoc.convert('README.md', 'rst')
@@ -16,10 +18,6 @@ except (IOError, ImportError) as ex:
     # present in your MANIFEST.in file!
     with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
         long_description = f.read()
-
-REQUIRED = []
-
-here = os.path.abspath(os.path.dirname(__file__))
 
 setup(
     name='dump-env',
@@ -32,7 +30,7 @@ setup(
 
     packages=find_packages(exclude=('tests', )),
 
-    install_requires=REQUIRED,
+    install_requires=[],
     include_package_data=True,
     zip_safe=False,
 
