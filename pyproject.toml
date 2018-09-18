@@ -1,0 +1,63 @@
+[tool.poetry]
+name = "dump-env"
+version = "0.2.2"
+description = "A utility tool to create .env files"
+
+license = "MIT"
+
+authors = [
+  "Nikita Sobolev <mail@sobolevn.me>"
+]
+
+readme = "README.md"  # Markdown files are supported
+
+repository = "https://github.com/sobolevn/dump-env"
+homepage = "https://github.com/sobolevn/dump-env"
+
+keywords = [
+  "dump-env",
+  "flake8",
+  "plugin",
+  "linting",
+  "wemake.services"
+
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Framework :: Flake8",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Quality Assurance",
+]
+
+[tool.poetry.plugins."flake8.extension"]
+Z = "wemake_python_styleguide.checker:Checker"
+
+[tool.poetry.dependencies]
+python = "^3.6 || ^3.7"
+flake8 = "^3.5"
+
+# This is a fix for issue-118
+pycodestyle = "==2.3.1"
+
+# delegator.py - didn't find this one
+pytest-cov = "^2.6"
+pytest-isort = "^0.2.1"
+flake8-builtins = "^1.4"
+flake8-commas = "^2.0"
+flake8-quotes = "^1.0"
+flake8-pep3101 = "^1.2"
+flake8-comprehensions = "^1.4"
+flake8-blind-except = "^0.1"
+flake8-docstrings = "^1.3"
+flake8-string-format = "^0.2"
+flake8-coding = "^1.3"
+flake8-module-name = "^0.1"
+flake8-pytest = "^1.3"
+pep8-naming = "^0.7"
+pytest = "^3.8"
+pytest-flake8 = "^1.0"
+# pyroma - coulnd't find one's version in dump-env/toxi.ini
