@@ -40,7 +40,6 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^2.7 || ^3.6"  # taken from setup.py
 
-# This is a fix for issue-118
 # all the versions below are defined with poetry add --dev DEPENDENCY_NAME
 [tool.poetry.dev-dependencies]
 pycodestyle = "^2.4"
