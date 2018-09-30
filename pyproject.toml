@@ -42,7 +42,6 @@ python = "^2.7 || ^3.6"  # taken from setup.py
 
 # all the versions below are defined with poetry add --dev DEPENDENCY_NAME
 [tool.poetry.dev-dependencies]
-pycodestyle = "^2.4"
 pytest-cov = "^2.6"
 pytest-isort = "^0.2.1"
 flake8-builtins = "^1.4"
