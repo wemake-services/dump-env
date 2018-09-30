@@ -1,20 +1,23 @@
 language: python
 
-addons:
-  apt:
-    packages:
-      - pandoc
 
-python:
-  - 2.7
-  - 3.5
-  - 3.6
+matrix:
+  fast_finish: true
+  include:
+    - python: 2.7
+    - python: 3.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
 
 install:
-  - pip install tox-travis wheel pypandoc
+  - pip install poetry
+  - poetry install
+  - poetry develop
 
 script:
-  - tox
+  - poetry run pytest
 
 after_success:
   - pip install coveralls
@@ -28,7 +31,6 @@ deploy:
   on:
     branch: master
     tags: true
-    condition: $TRAVIS_PYTHON_VERSION = "2.7"
 
 notifications:
   email:
