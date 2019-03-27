@@ -17,6 +17,14 @@ def test_both_options(monkeypatch, env_file):
     assert result.out == 'NORMAL_KEY=SOMEVALUE\nVALUE=1\n'
 
 
+def test_multiple_prefixes(monkeypatch):
+    monkeypatch.setenv('SOM_TT_VALUE', '1')
+    monkeypatch.setenv('ANOTHER_TT_VALUE', '2')
+
+    result = delegator.run('dump-env -p SOM_TT_ -p ANOTHER_TT_')
+    assert result.out == 'VALUE=2\n'
+
+
 def test_simple_usage_file_output(monkeypatch, tmpdir):
     monkeypatch.setenv('SOM_TT_VALUE', '1')
 

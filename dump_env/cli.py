@@ -10,8 +10,7 @@ def _create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--template', default='',
                         type=str, help='Adds template path')
-    parser.add_argument('-p', '--prefix', default='',
-                        type=str, help='Adds prefix')
+    parser.add_argument('-p', '--prefix', action='append', help='Adds prefix')
     return parser
 
 
@@ -27,6 +26,11 @@ def main():
         This example will dump all environ variables starting with `PIP_`::
 
             $ dump-env -p 'PIP_'
+
+        This example will dump all environ variables starting with `PIP_`
+        and update them with variables starting with `SECRET_`::
+
+            $ dump-env -p 'PIP_' -p 'SECRET_'
 
         This example will dump everything from `.env.template` file
         and all env variables with `SECRET_` prefix into a `.env` file::

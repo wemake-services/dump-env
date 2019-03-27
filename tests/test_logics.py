@@ -26,9 +26,9 @@ class TestParse(object):
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
 class TestDump(object):
     @staticmethod
-    def simple_environ(prefix=''):
+    def simple_environ(prefix='', value='value'):
         return {
-            '{0}key'.format(prefix): 'value',
+            '{0}key'.format(prefix): value,
             'a': 'b',
         }
 
@@ -45,7 +45,7 @@ class TestDump(object):
         monkeypatch.setattr(
             dump_env, 'environ', self.simple_environ(prefix=prefix),
         )
-        result = dump(prefix=prefix)
+        result = dump(prefixes=[prefix])
 
         assert len(result.keys()) == 1
         assert result['key'] == 'value'
@@ -64,11 +64,27 @@ class TestDump(object):
         monkeypatch.setattr(
             dump_env, 'environ', self.simple_environ(prefix=prefix),
         )
-        result = dump(template=env_file, prefix=prefix)
+        result = dump(template=env_file, prefixes=[prefix])
 
         assert list(result.keys()) == ['NORMAL_KEY', 'key']
         assert result['key'] == 'value'
         assert result['NORMAL_KEY'] == 'SOMEVALUE'
+
+    def test_with_multiple_prefixes(self, monkeypatch):
+        first_prefix = 'P1_'
+        monkeypatch.setattr(
+            dump_env, 'environ', self.simple_environ(prefix=first_prefix),
+        )
+        second_prefix = 'P2_'
+        monkeypatch.setattr(
+            dump_env, 'environ', self.simple_environ(
+                prefix=second_prefix, value='another_value',
+            ),
+        )
+        result = dump(prefixes=[first_prefix, second_prefix])
+
+        assert len(result.keys()) == 1
+        assert result['key'] == 'another_value'
 
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
@@ -99,7 +115,7 @@ class TestDumpRegression(object):
         monkeypatch.setattr(
             dump_env, 'environ', self.multiple_prefix(),
         )
-        result = dump(template=env_file, prefix='SECRET_')
+        result = dump(template=env_file, prefixes=['SECRET_'])
 
         # Only prefix should be changed, other parts should not:
         assert result['DJANGO_SECRET_KEY'] == 'test'

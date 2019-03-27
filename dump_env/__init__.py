@@ -51,7 +51,7 @@ def _preload_existing_vars(prefix):
     return prefixed
 
 
-def dump(template='', prefix=''):
+def dump(template='', prefixes=None):
     """
     This function is used to dump .env files.
 
@@ -62,13 +62,15 @@ def dump(template='', prefix=''):
     Args:
         template (str): The path of the `.env` template file,
            use an empty string when there is no template file.
-        prefix (str): String prefix to use only certain env
+        prefixes (List[str]): List of string prefixes to use only certain env
            variables, could be an empty string to use all available variables.
 
     Returns:
         OrderedDict: ordered key-value pairs.
 
     """
+    if prefixes is None:
+        prefixes = ['']
     store = {}
 
     if template:
@@ -76,7 +78,8 @@ def dump(template='', prefix=''):
         store.update(parse(template))
 
     # Loading env variables from `os.environ`:
-    store.update(_preload_existing_vars(prefix))
+    for prefix in prefixes:
+        store.update(_preload_existing_vars(prefix))
 
     # Sort keys and keep them ordered:
     return OrderedDict(sorted(store.items()))
