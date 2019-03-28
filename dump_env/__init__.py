@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from os import environ
 from collections import OrderedDict
+from os import environ
 
 
 def parse(source):
