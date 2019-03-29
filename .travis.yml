@@ -1,20 +1,27 @@
 language: python
 
-addons:
-  apt:
-    packages:
-      - pandoc
+matrix:
+  fast_finish: true
+  include:
+    - python: 3.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
 
-python:
-  - 2.7
-  - 3.5
-  - 3.6
+before_install:
+  - pip freeze | xargs pip uninstall -y
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - source "$HOME/.poetry/env"
 
 install:
-  - pip install tox-travis wheel pypandoc
+  - poetry install
 
 script:
-  - tox
+    - poetry run flake8 dump-env tests
+    - poetry run pytest
+    - poetry check
+    - poetry run pip check
+    - poetry run safety check --bare --full-report
 
 after_success:
   - pip install coveralls

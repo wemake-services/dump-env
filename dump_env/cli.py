@@ -2,14 +2,20 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import sys
 
-from dump_env import dump
+from dump_env.dumper import dump
 
 
 def _create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-t', '--template', default='',
-                        type=str, help='Adds template path')
+    parser.add_argument(
+        '-t',
+        '--template',
+        default='',
+        type=str,
+        help='Adds template path',
+    )
     parser.add_argument('-p', '--prefix', action='append', help='Adds prefix')
     return parser
 
@@ -42,5 +48,5 @@ def main():
     args = parser.parse_args()
     variables = dump(args.template, args.prefix)
 
-    for key, value in variables.items():
-        print('{0}={1}'.format(key, value))
+    for env_name, env_value in variables.items():
+        sys.stdout.write('{0}={1}'.format(env_name, env_value) + '\n')
