@@ -8,7 +8,7 @@
 API Reference
 -------------
 
-.. automodule:: dump_env
+.. automodule:: dump_env.dumper
    :members:
 
 .. automodule:: dump_env.cli
