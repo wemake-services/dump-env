@@ -18,6 +18,7 @@ install:
 
 script:
     - poetry run flake8 dump-env tests
+    - poetry run mypy dump_env
     - poetry run pytest
     - poetry check
     - poetry run pip check

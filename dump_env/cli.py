@@ -7,7 +7,7 @@ import sys
 from dump_env.dumper import dump
 
 
-def _create_parser():
+def _create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-t',
@@ -20,7 +20,7 @@ def _create_parser():
     return parser
 
 
-def main():
+def main() -> None:
     """
     Runs dump-env script.
 
