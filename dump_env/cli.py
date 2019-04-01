@@ -4,7 +4,11 @@
 import argparse
 import sys
 
-from dump_env.dumper import dump
+from dump_env.dumper import Dumper
+
+
+STRICT_WITHOUT_TEMPLATE_MSG = 'For --strict option either strict ' \
+                              'variables either template should be given.\n'
 
 
 def _create_parser() -> argparse.ArgumentParser:
@@ -46,7 +50,9 @@ def main() -> None:
     """
     parser = _create_parser()
     args = parser.parse_args()
-    variables = dump(args.template, args.prefix)
+
+    dumper = Dumper(template=args.template, prefixes=args.prefix)
+    variables = dumper.dump()
 
     for env_name, env_value in variables.items():
         sys.stdout.write('{0}={1}'.format(env_name, env_value) + '\n')
