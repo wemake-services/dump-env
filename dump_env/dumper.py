@@ -2,9 +2,13 @@
 
 from collections import OrderedDict
 from os import environ
+from typing import Dict, List, Mapping
 
 
-def parse(source):
+ENV_STORE = Mapping[str, str]
+
+
+def parse(source: str) -> ENV_STORE:
     """
     Reads the source `.env` file and load key-values.
 
@@ -33,7 +37,7 @@ def parse(source):
     return parsed_data
 
 
-def _preload_existing_vars(prefix):
+def _preload_existing_vars(prefix: str) -> ENV_STORE:
     if not prefix:
         # If prefix is empty just return all the env variables.
         return environ
@@ -51,7 +55,7 @@ def _preload_existing_vars(prefix):
     return prefixed
 
 
-def dump(template='', prefixes=None):
+def dump(template: str='', prefixes: List[str]=None) -> 'OrderedDict[str, str]':
     """
     This function is used to dump .env files.
 
@@ -71,7 +75,7 @@ def dump(template='', prefixes=None):
     """
     if prefixes is None:
         prefixes = ['']
-    store = {}
+    store: Dict[str, str] = {}
 
     if template:
         # Loading env values from template file:
