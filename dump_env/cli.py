@@ -3,12 +3,13 @@
 
 import argparse
 import sys
+from typing import Union
 
-from dump_env.dumper import Dumper
+from dump_env.dumper import Dumper, StrictDumper, StrictException
 
 
 STRICT_WITHOUT_TEMPLATE_MSG = 'For --strict option either strict ' \
-                              'variables either template should be given.\n'
+                              'variables or template should be given.\n'
 
 
 def _create_parser() -> argparse.ArgumentParser:
@@ -19,6 +20,15 @@ def _create_parser() -> argparse.ArgumentParser:
         default='',
         type=str,
         help='Adds template path',
+    )
+    parser.add_argument(
+        '--strict',
+        type=str,
+        nargs='?',
+        const=True,
+        default=False,
+        dest='strict',
+        help='Strict variables should exists in os envs',
     )
     parser.add_argument('-p', '--prefix', action='append', help='Adds prefix')
     return parser
@@ -51,8 +61,27 @@ def main() -> None:
     parser = _create_parser()
     args = parser.parse_args()
 
-    dumper = Dumper(template=args.template, prefixes=args.prefix)
-    variables = dumper.dump()
+    if args.strict is True and not args.template:
+        sys.stderr.write(STRICT_WITHOUT_TEMPLATE_MSG)
+        return
+
+    strict: Union[bool, str] = args.strict
+
+    if not strict:
+        dumper = Dumper(template=args.template, prefixes=args.prefix)
+    else:
+        strict_envs = strict.split(',') if isinstance(strict, str) else []
+        dumper = StrictDumper(
+            template=args.template,
+            prefixes=args.prefix,
+            strict_envs=strict_envs
+        )
+
+    try:
+        variables = dumper.dump()
+    except StrictException as e:
+        sys.stderr.write(str(e) + '\n')
+        return
 
     for env_name, env_value in variables.items():
         sys.stdout.write('{0}={1}'.format(env_name, env_value) + '\n')

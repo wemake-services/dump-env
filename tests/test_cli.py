@@ -44,3 +44,20 @@ def test_simple_usage_file_output(monkeypatch, tmpdir):
 
     with open(filename) as env_file:
         assert env_file.read() == 'VALUE=1\n'
+
+
+def test_strict_no_option():
+    """Strict option without other options should give an error."""
+    error = delegator.run('dump-env --strict')
+    assert error.err == (
+        'For --strict option either strict variables ' +  # noqa: W504
+        'or template should be given.\n'
+    )
+
+
+def test_strict_with_template(env_file):
+    """All variables from template should exists in os envs."""
+    error = delegator.run('dump-env --strict -t ' + env_file)
+    assert error.err == (
+        'Environment variables for keys: NORMAL_KEY - does not set\n'
+    )
