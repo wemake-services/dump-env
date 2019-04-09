@@ -36,6 +36,9 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython"
 ]
 
+[tool.poetry.scripts]
+dump-env = "dump_env.cli:main"
+
 [tool.poetry.dependencies]
 python = "^3.6"  # taken from setup.py
 
