@@ -17,9 +17,10 @@ install:
   - poetry install
 
 script:
-    - poetry run flake8 dump-env tests
+    - poetry run flake8 .
     - poetry run mypy dump_env
     - poetry run pytest
+    - poetry run doc8 -q docs
     - poetry check
     - poetry run pip check
     - poetry run safety check --bare --full-report
@@ -27,16 +28,6 @@ script:
 after_success:
   - pip install coveralls
   - coveralls
-
-deploy:
-  provider: pypi
-  user: sobolevn
-  password: $PYPI_PASSWORD  # password is hidden
-  distributions: sdist bdist_wheel
-  on:
-    branch: master
-    tags: true
-    condition: $TRAVIS_PYTHON_VERSION = "2.7"
 
 notifications:
   email:

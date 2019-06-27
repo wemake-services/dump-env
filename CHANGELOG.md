@@ -1,5 +1,28 @@
 # dump-env changelog
 
+We follow semantic versioning.
+
+
+## Version 1.0.0
+
+### Breaking changes
+
+- Dropped `python2` support
+
+### Features
+
+- Adds multiple `-p` flags
+
+### Misc
+
+- Updates dependencies
+- Enables dependabot
+- Improves testing and type checking
+- Improves docs
+- Adds `CONTRIBUTING.md`
+- Fixes `sphinx` and `readthedocs` builds
+
+
 ## Version 0.2.1
 
 ### Features

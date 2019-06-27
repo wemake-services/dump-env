@@ -1,6 +1,10 @@
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
 [tool.poetry]
 name = "dump-env"
-version = "0.2.2"
+version = "0.3.0"
 description = "A utility tool to create .env files"
 
 license = "MIT"
@@ -9,7 +13,7 @@ authors = [
   "Nikita Sobolev <mail@sobolevn.me>"
 ]
 
-readme = "README.md"  # Markdown files are supported
+readme = "README.md"
 
 repository = "https://github.com/sobolevn/dump-env"
 homepage = "https://github.com/sobolevn/dump-env"
@@ -20,7 +24,6 @@ keywords = [
   "tempaltes",
   "secrets",
   "CI/CD"
-
 ]
 
 classifiers = [
@@ -40,13 +43,20 @@ classifiers = [
 dump-env = "dump_env.cli:main"
 
 [tool.poetry.dependencies]
-python = "^3.6"  # taken from setup.py
+python = "^3.6"
 
-# all the versions below are defined with poetry add --dev DEPENDENCY_NAME
 [tool.poetry.dev-dependencies]
-pytest = "^3.8"
-pytest-cov = "^2.6"
-wemake-python-styleguide = "^0.8.1"
+pytest-cov = "^2.7"
+pytest-randomly = "^3.0"
+pytest = "^4.6"
 "delegator.py" = "^0.1.1"
+
+wemake-python-styleguide = "^0.9.0"
 safety = "^1.8"
-mypy = "^0.670.0"
+mypy = "^0.711"
+
+sphinx = "^2.1"
+m2r = "^0.2"
+doc8 = "^0.8"
+sphinx-readable-theme = "^1.3"
+tomlkit = "^0.5.3"
