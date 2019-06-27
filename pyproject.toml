@@ -4,7 +4,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "dump-env"
-version = "0.3.0"
+version = "1.0.0"
 description = "A utility tool to create .env files"
 
 license = "MIT"
