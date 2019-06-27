@@ -33,7 +33,7 @@ This command will:
 2. parse its keys and values
 3. read and all the variables from the environment starting with `SECRET_ENV_`
 4. remove this prefix
-5. mix it all together, where environment variables could override ones with the same name from the template
+5. mix it all together, environment vars may override ones from the template
 6. sort keys in alphabetic order
 7. dump all the keys and values into the `.env` file
 
