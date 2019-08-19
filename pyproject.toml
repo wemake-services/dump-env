@@ -55,7 +55,7 @@ wemake-python-styleguide = "^0.9.0"
 safety = "^1.8"
 mypy = "^0.720"
 
-sphinx = "^2.1"
+sphinx = "^2.2"
 m2r = "^0.2"
 doc8 = "^0.8"
 sphinx-readable-theme = "^1.3"
