@@ -3,6 +3,17 @@
 We follow semantic versioning.
 
 
+## Version 1.1.0
+
+### Features
+
+- Adds `--strict` option to fail the command if some keys are not present
+
+### Misc
+
+- Updates `wemake-python-styleguide` to the latest version
+
+
 ## Version 1.0.0
 
 ### Breaking changes

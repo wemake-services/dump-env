@@ -40,6 +40,8 @@ This command will:
 
 ## Advanced Usage
 
+### Multiple prefixes
+
 ```bash
 $ dump-env -t .env.template -p 'SECRET_ENV_' -p 'ANOTHER_SECRET_ENV_' > .env
 ```
@@ -59,11 +61,32 @@ TOKEN=very secret string
 VALUE=0
 ```
 
+### Strict env variables
+
+In case you want to be sure that `YOUR_VAR` exists
+in your enviroment when dumping, you can use `--strict` flag:
+
+```bash
+$ dump-env --strict YOUR_VAR -p YOUR_
+Missing env vars: YOUR_VAR
+```
+
+Oups! We forgot to create it! Now this will work:
+
+```bash
+$ export YOUR_VAR='abc'
+$ dump-env --strict YOUR_VAR -p YOUR_
+VAR=abc
+```
+
+No more forgotten template overrides or missing env vars!
+
 
 ## Creating secret variables in some CIs
 
 - [travis docs](https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-variables-in-.travis.yml)
 - [gitlab-ci docs](https://docs.gitlab.com/ce/ci/variables/README.html#secret-variables)
+- [github actions](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables)
 
 
 ## Real-world usages
@@ -72,3 +95,8 @@ Projects that use this tool in production:
 
 - [wemake-django-template](https://github.com/wemake-services/wemake-django-template/blob/master/%7B%7Bcookiecutter.project_name%7D%7D/.gitlab-ci.yml#L24)
 - [wemake-vue-template](https://github.com/wemake-services/wemake-vue-template/blob/master/template/.gitlab-ci.yml#L24)
+
+
+## License
+
+[MIT](https://github.com/sobolevn/dump-env/blob/master/LICENSE

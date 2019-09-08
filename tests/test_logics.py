@@ -3,7 +3,31 @@
 import pytest
 
 from dump_env import dumper
-from dump_env.dumper import dump, parse
+from dump_env.dumper import _parse as parse  # noqa: WPS436
+from dump_env.dumper import dump
+
+
+def simple_environ(prefix='', env_value='value'):
+    """Returns dict with example environment with given prefix and value."""
+    return {
+        '{0}key'.format(prefix): env_value,
+        'a': 'b',
+    }
+
+
+def same_environ():
+    """Returns dict with example environment with given prefix and value."""
+    return {
+        'NORMAL_KEY': 'test',
+    }
+
+
+def multiple_variables_with_prefix():
+    """Returns dict with environment with multiple prefixed variables."""
+    return {
+        'SECRET_DJANGO_SECRET_KEY': 'test',
+        'SECRET_SECRET_VALUE': 'value',
+    }
 
 
 @pytest.mark.usefixtures('env_file')
@@ -25,14 +49,6 @@ class TestParse(object):
         assert isinstance(parsed_data, dict)
         assert 'COMMENTED_KEY' not in parsed_data
         assert 'KEY_WITH_NO_ASSIGNMENT' not in parsed_data
-
-
-def simple_environ(prefix='', env_value='value'):
-    """Returns dict with example environment with given prefix and value."""
-    return {
-        '{0}key'.format(prefix): env_value,
-        'a': 'b',
-    }
 
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
@@ -97,21 +113,6 @@ class TestDump(object):
 
         assert len(dump_result.keys()) == 1
         assert dump_result['key'] == 'another_value'
-
-
-def same_environ():
-    """Returns dict with example environment with given prefix and value."""
-    return {
-        'NORMAL_KEY': 'test',
-    }
-
-
-def multiple_variables_with_prefix():
-    """Returns dict with environment with multiple prefixed variables."""
-    return {
-        'SECRET_DJANGO_SECRET_KEY': 'test',
-        'SECRET_SECRET_VALUE': 'value',
-    }
 
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
