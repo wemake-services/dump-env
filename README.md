@@ -98,6 +98,13 @@ Projects that use this tool in production:
 - [wemake-vue-template](https://github.com/wemake-services/wemake-vue-template/blob/master/template/.gitlab-ci.yml#L24)
 
 
+## Related
+
+You might also be interested in:
+
+- <https://github.com/wemake-services/dotenv-linter>
+
+
 ## License
 
 [MIT](https://github.com/sobolevn/dump-env/blob/master/LICENSE)
