@@ -79,6 +79,7 @@ $ dump-env --strict YOUR_VAR -p YOUR_
 VAR=abc
 ```
 
+Any number of `--strict` flags can be provided.
 No more forgotten template overrides or missing env vars!
 
 
