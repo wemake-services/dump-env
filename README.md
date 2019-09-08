@@ -99,4 +99,4 @@ Projects that use this tool in production:
 
 ## License
 
-[MIT](https://github.com/sobolevn/dump-env/blob/master/LICENSE
+[MIT](https://github.com/sobolevn/dump-env/blob/master/LICENSE)
