@@ -3,6 +3,13 @@
 We follow semantic versioning.
 
 
+## Version 1.1.1
+
+### Bugfixes
+
+- Outputs errors to `stderr` instead of `stdout`
+
+
 ## Version 1.1.0
 
 ### Features

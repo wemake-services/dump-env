@@ -4,7 +4,7 @@ style = "https://raw.githubusercontent.com/wemake-services/wemake-python-stylegu
 
 [tool.poetry]
 name = "dump-env"
-version = "1.1.0"
+version = "1.1.1"
 description = "A utility tool to create .env files"
 
 license = "MIT"

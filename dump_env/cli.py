@@ -77,7 +77,7 @@ def main() -> NoReturn:
     try:
         variables = dump(args.template, args.prefix, strict_vars)
     except StrictEnvException as exc:
-        sys.stdout.write('{0}\n'.format(str(exc)))
+        sys.stderr.write('{0}\n'.format(str(exc)))
         sys.exit(1)
     else:
         for env_name, env_value in variables.items():
