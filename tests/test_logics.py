@@ -3,8 +3,6 @@
 import pytest
 
 from dump_env import dumper
-from dump_env.dumper import _parse as parse  # noqa: WPS436
-from dump_env.dumper import dump
 
 
 def simple_environ(prefix='', env_value='value'):
@@ -36,7 +34,7 @@ class TestParse(object):
 
     def test_parse_normal(self, env_file):
         """Ensures that given env keys are present in output."""
-        parsed_data = parse(env_file)
+        parsed_data = dumper._parse(env_file)  # noqa: WPS437
 
         assert isinstance(parsed_data, dict)
         assert 'NORMAL_KEY' in parsed_data
@@ -44,7 +42,7 @@ class TestParse(object):
 
     def test_parse_exceptions(self, env_file):
         """Ensures that unknown env keys are not present in output."""
-        parsed_data = parse(env_file)
+        parsed_data = dumper._parse(env_file)  # noqa: WPS437
 
         assert isinstance(parsed_data, dict)
         assert 'COMMENTED_KEY' not in parsed_data
@@ -58,7 +56,7 @@ class TestDump(object):
     def test_with_default_arguments(self, monkeypatch):
         """Dumper without options return unmodified environment variables."""
         monkeypatch.setattr(dumper, 'environ', simple_environ())
-        dump_result = dump()
+        dump_result = dumper.dump()
 
         assert list(dump_result.keys()) == ['a', 'key']
         assert dump_result['key'] == 'value'
@@ -70,7 +68,7 @@ class TestDump(object):
         monkeypatch.setattr(
             dumper, 'environ', simple_environ(prefix=prefix),
         )
-        dump_result = dump(prefixes=[prefix])
+        dump_result = dumper.dump(prefixes=[prefix])
 
         assert len(dump_result.keys()) == 1
         assert dump_result['key'] == 'value'
@@ -78,7 +76,7 @@ class TestDump(object):
     def test_with_template(self, monkeypatch, env_file):
         """Dumper with template option return variables for given template."""
         monkeypatch.setattr(dumper, 'environ', simple_environ())
-        dump_result = dump(template=env_file)
+        dump_result = dumper.dump(template=env_file)
 
         assert list(dump_result.keys()) == ['NORMAL_KEY', 'a', 'key']
         assert dump_result['key'] == 'value'
@@ -91,7 +89,7 @@ class TestDump(object):
         monkeypatch.setattr(
             dumper, 'environ', simple_environ(prefix=prefix),
         )
-        dump_result = dump(template=env_file, prefixes=[prefix])
+        dump_result = dumper.dump(template=env_file, prefixes=[prefix])
 
         assert list(dump_result.keys()) == ['NORMAL_KEY', 'key']
         assert dump_result['key'] == 'value'
@@ -109,7 +107,7 @@ class TestDump(object):
                 prefix=second_prefix, env_value='another_value',
             ),
         )
-        dump_result = dump(prefixes=[first_prefix, second_prefix])
+        dump_result = dumper.dump(prefixes=[first_prefix, second_prefix])
 
         assert len(dump_result.keys()) == 1
         assert dump_result['key'] == 'another_value'
@@ -124,7 +122,7 @@ class TestDumpRegression(object):
         monkeypatch.setattr(
             dumper, 'environ', same_environ(),
         )
-        dump_result = dump(template=env_file)
+        dump_result = dumper.dump(template=env_file)
 
         # Should contain the value from env, not from template:
         assert dump_result['NORMAL_KEY'] == 'test'
@@ -134,7 +132,7 @@ class TestDumpRegression(object):
         monkeypatch.setattr(
             dumper, 'environ', multiple_variables_with_prefix(),
         )
-        dump_result = dump(template=env_file, prefixes=['SECRET_'])
+        dump_result = dumper.dump(template=env_file, prefixes=['SECRET_'])
 
         # Only prefix should be changed, other parts should not:
         assert dump_result['DJANGO_SECRET_KEY'] == 'test'

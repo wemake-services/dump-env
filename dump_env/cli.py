@@ -4,7 +4,7 @@ import argparse
 import sys
 from typing import NoReturn
 
-from dump_env.dumper import dump
+from dump_env import dumper
 from dump_env.exceptions import StrictEnvException
 
 
@@ -75,7 +75,7 @@ def main() -> NoReturn:
     strict_vars = set(args.strict) if args.strict else None
 
     try:
-        variables = dump(args.template, args.prefix, strict_vars)
+        variables = dumper.dump(args.template, args.prefix, strict_vars)
     except StrictEnvException as exc:
         sys.stderr.write('{0}\n'.format(str(exc)))
         sys.exit(1)

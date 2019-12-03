@@ -78,17 +78,20 @@ def dump(
     strict_keys: Optional[Set[str]] = None,
 ) -> Dict[str, str]:
     """
-    This function is used to dump .env files.
+    This function is used to dump ``.env`` files.
 
     As a source you can use both:
     1. env.template file (``''`` by default)
     2. env vars prefixed with some prefix (``''`` by default)
 
     Args:
-        template: The path of the `.env` template file,
+        template: The path of the ``.env`` template file,
            use an empty string when there is no template file.
+
         prefixes: List of string prefixes to use only certain env
            variables, could be an empty string to use all available variables.
+
+        strict_keys: List of keys that must be presented in env vars.
 
     Returns:
         Ordered key-value pairs of dumped env and template variables.
