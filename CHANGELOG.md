@@ -3,6 +3,13 @@
 We follow semantic versioning.
 
 
+## Version 1.2.0
+
+### Features
+
+- Adds `python3.8` support
+
+
 ## Version 1.1.1
 
 ### Bugfixes
