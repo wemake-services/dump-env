@@ -64,7 +64,7 @@ VALUE=0
 ### Strict env variables
 
 In case you want to be sure that `YOUR_VAR` exists
-in your enviroment when dumping, you can use `--strict` flag:
+in your environment when dumping, you can use `--strict` flag:
 
 ```bash
 $ dump-env --strict YOUR_VAR -p YOUR_
