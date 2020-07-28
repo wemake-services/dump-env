@@ -58,6 +58,20 @@ def _preload_existing_vars(prefix: str) -> Store:
     return prefixed
 
 
+def _preload_specific_vars(env_keys: Set[str]) -> Store:
+    """Preloads env vars from environ in the given set."""
+    specified = {}
+
+    for env_name, env_value in environ.items():
+        if env_name not in env_keys:
+            # Skip vars that have not been requested.
+            continue
+
+        specified[env_name] = env_value
+
+    return specified
+
+
 def _assert_envs_exist(strict_keys: Set[str]) -> None:
     """Checks that all variables from strict keys do exists."""
     missing_keys: List[str] = [
@@ -76,6 +90,8 @@ def dump(
     template: str = '',
     prefixes: Optional[List[str]] = None,
     strict_keys: Optional[Set[str]] = None,
+    source: str = '',
+    strict_source: bool = False,
 ) -> Dict[str, str]:
     """
     This function is used to dump ``.env`` files.
@@ -93,6 +109,14 @@ def dump(
 
         strict_keys: List of keys that must be presented in env vars.
 
+        source: The path of the ``.env`` template file,
+           defines the base list of env vars that should be checked,
+           disables the fetching of non-prefixed env vars,
+           use an empty string when there is no source file.
+
+        strict_source: Whether all keys in source template must also be
+           presented in env vars.
+
     Returns:
         Ordered key-value pairs of dumped env and template variables.
 
@@ -101,12 +125,21 @@ def dump(
 
     """
     if prefixes is None:
-        prefixes = ['']
+        prefixes = [''] if source == '' else []
 
     if strict_keys:
         _assert_envs_exist(strict_keys)
 
     store: Dict[str, str] = {}
+
+    if source:
+        # Loading env values from source template file:
+        store.update(_parse(source))
+
+        if strict_source:
+            _assert_envs_exist(set(store.keys()))
+
+        store.update(_preload_specific_vars(set(store.keys())))
 
     if template:
         # Loading env values from template file:

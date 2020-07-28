@@ -30,6 +30,18 @@ def _create_parser() -> argparse.ArgumentParser:
         action='append',
         help='Strict variables should exists in os envs',
     )
+    parser.add_argument(
+        '-s',
+        '--source',
+        default='',
+        type=str,
+        help='Source template path, restricts non-prefixed env vars',
+    )
+    parser.add_argument(
+        '--strict-source',
+        action='store_true',
+        help='All source template variables should exist in os envs',
+    )
     return parser
 
 
@@ -70,12 +82,32 @@ def main() -> NoReturn:
 
             $ dump-env --strict=REQUIRED
 
+        This example will dump everything from a source ``.env.template`` file
+        with only env variables that are defined in the file:
+
+        .. code:: bash
+
+            $ dump-env -s .env.template
+
+        This example will fail if any keys in the source template do not exist
+        in the environment:
+
+        .. code:: bash
+
+            $ dump-env -s .env.template --strict-source
+
     """
     args = _create_parser().parse_args()
     strict_vars = set(args.strict) if args.strict else None
 
     try:
-        variables = dumper.dump(args.template, args.prefix, strict_vars)
+        variables = dumper.dump(
+            args.template,
+            args.prefix,
+            strict_vars,
+            args.source,
+            args.strict_source,
+        )
     except StrictEnvException as exc:
         sys.stderr.write('{0}\n'.format(str(exc)))
         sys.exit(1)
