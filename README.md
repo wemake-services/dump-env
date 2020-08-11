@@ -82,6 +82,45 @@ VAR=abc
 Any number of `--strict` flags can be provided.
 No more forgotten template overrides or missing env vars!
 
+### Source templates
+
+You can use an env template as a source template by using the `-s` or `--source` argument. This will restrict any non-prefixed variables found in the environment to only those already defined in your template.
+
+```bash
+$ cat template.env
+ANSWER=13
+TOKEN=very secret string
+VALUE=0
+```
+
+```bash
+$ export ANSWER='42'
+$ dump-env --source=template.env
+ANSWER=42
+TOKEN=very secret string
+VALUE=0
+```
+
+You can still also use prefixes to add extra variables from the environment
+
+```bash
+$ export EXTRA_VAR='foo'
+$ dump-env -s template.env -p EXTRA_
+ANSWER=13
+TOKEN=very secret string
+VALUE=0
+VAR=foo
+```
+
+#### Strict Source
+
+Using the `--strict-source` flag has the same effect as defining a `--strict` flag for every variable defined in the source template.
+
+```bash
+$ export ANSWER='42'
+$ dump-env -s template.env --strict-source
+Missing env vars: TOKEN, VALUE
+```
 
 ## Creating secret variables in some CIs
 
