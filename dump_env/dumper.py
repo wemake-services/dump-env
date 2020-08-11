@@ -8,6 +8,8 @@ from dump_env.exceptions import StrictEnvException
 
 Store = Mapping[str, str]
 
+EMPTY_STRING = ''
+
 
 def _parse(source: str) -> Store:
     """
@@ -86,11 +88,25 @@ def _assert_envs_exist(strict_keys: Set[str]) -> None:
         )
 
 
+def _source(source: str, strict_source: bool) -> Store:
+    """Applies vars and assertions from source template ``.env`` file."""
+    sourced: Dict[str, str] = {}
+
+    sourced.update(_parse(source))
+
+    if strict_source:
+        _assert_envs_exist(set(sourced.keys()))
+
+    sourced.update(_preload_specific_vars(set(sourced.keys())))
+
+    return sourced
+
+
 def dump(
-    template: str = '',
+    template: str = EMPTY_STRING,
     prefixes: Optional[List[str]] = None,
     strict_keys: Optional[Set[str]] = None,
-    source: str = '',
+    source: str = EMPTY_STRING,
     strict_source: bool = False,
 ) -> Dict[str, str]:
     """
@@ -125,7 +141,7 @@ def dump(
 
     """
     if prefixes is None:
-        prefixes = [''] if source == '' else []
+        prefixes = [] if source else [EMPTY_STRING]
 
     if strict_keys:
         _assert_envs_exist(strict_keys)
@@ -134,12 +150,7 @@ def dump(
 
     if source:
         # Loading env values from source template file:
-        store.update(_parse(source))
-
-        if strict_source:
-            _assert_envs_exist(set(store.keys()))
-
-        store.update(_preload_specific_vars(set(store.keys())))
+        store.update(_source(source, strict_source))
 
     if template:
         # Loading env values from template file:
