@@ -53,9 +53,9 @@ nitpick = "^0.23"
 safety = "^1.9"
 mypy = "^0.790"
 
-sphinx = "^3.3"
+sphinx = "^3.2"
 sphinx-readable-theme = "^1.3"
-m2r = "^0.2"
+m2r2 = "^0.2"
 doc8 = "^0.8"
 tomlkit = "^0.7"
 

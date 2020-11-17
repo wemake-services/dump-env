@@ -3,6 +3,13 @@
 We follow semantic versioning.
 
 
+## Version 1.3.0
+
+### Features
+
+- Adds `python3.9` support
+
+
 ## Version 1.2.0
 
 ### Features
