@@ -9,6 +9,11 @@ We follow semantic versioning.
 
 - Adds `python3.9` support
 
+### Misc
+
+- Moves to Github Actions
+- Bumps a lot of dev dependencies
+
 
 ## Version 1.2.0
 
