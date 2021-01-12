@@ -15,7 +15,7 @@ authors = [
 
 readme = "README.md"
 
-repository = "https://github.com/sobolevn/dump-env"
+repository = "https://github.com/wemake-services/dump-env"
 homepage = "https://dump-env.readthedocs.io"
 
 keywords = [
