@@ -100,7 +100,6 @@ add_module_names = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
 html_theme_path = [sphinx_readable_theme.get_html_theme_path()]
 html_theme = 'readable'
 
