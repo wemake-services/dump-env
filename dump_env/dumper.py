@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from collections import OrderedDict
 from os import environ
 from typing import Dict, List, Mapping, Optional, Set
