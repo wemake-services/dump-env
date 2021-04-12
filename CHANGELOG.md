@@ -8,6 +8,7 @@ We follow semantic versioning.
 ### Features
 
 - Adds `python3.9` support
+- Adds `--source` flag
 
 ### Misc
 
