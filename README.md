@@ -35,7 +35,7 @@ This command will:
 
 1. take `.env.template`
 2. parse its keys and values
-3. read and all the variables from the environment starting with `SECRET_ENV_`
+3. read all the variables from the environment starting with `SECRET_ENV_`
 4. remove this prefix
 5. mix it all together, environment vars may override ones from the template
 6. sort keys in alphabetic order
