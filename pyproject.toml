@@ -42,7 +42,7 @@ python = "^3.6"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.11"
-pytest-randomly = "^3.7"
+pytest-randomly = "^3.8"
 pytest = "^6.2"
 "delegator.py" = "^0.1.1"
 
