@@ -47,7 +47,7 @@ pytest = "^6.2"
 "delegator.py" = "^0.1.1"
 
 wemake-python-styleguide = "^0.15"
-flake8-pytest-style = "^1.4"
+flake8-pytest-style = "^1.5"
 nitpick = "^0.26"
 
 safety = "^1.10"
