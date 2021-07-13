@@ -55,7 +55,7 @@ mypy = "^0.910"
 
 sphinx = "4.1.0"
 sphinx-readable-theme = "^1.3"
-m2r2 = "^0.2"
+m2r2 = "^0.3"
 doc8 = "^0.8"
 tomlkit = "^0.7"
 
