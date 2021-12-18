@@ -47,7 +47,8 @@ def main() -> NoReturn:
     """
     Runs dump-env script.
 
-    Example:
+    Example::
+
         This example will dump all environ variables:
 
         .. code:: bash
