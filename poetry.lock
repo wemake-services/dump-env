@@ -205,7 +205,7 @@ tests = ["check-manifest (>=0.25)", "coverage (>=4.0)", "isort (>=4.2.2)", "mock
 
 [[package]]
 name = "doc8"
-version = "0.9.0"
+version = "0.10.1"
 description = "Style checker for Sphinx (or other) RST documentation"
 category = "dev"
 optional = false
@@ -1263,7 +1263,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "e37de0b1f37a1f70dcb1b443d05d30d52850a572d3c13d631962fcc022ccd656"
+content-hash = "19a03f68fe8154e504433c4bbbd4519e5f1c39b7634138992302ad27760f56ad"
 
 [metadata.files]
 aiocontextvars = [
@@ -1397,8 +1397,8 @@ dictdiffer = [
     {file = "dictdiffer-0.8.1.tar.gz", hash = "sha256:1adec0d67cdf6166bda96ae2934ddb5e54433998ceab63c984574d187cc563d2"},
 ]
 doc8 = [
-    {file = "doc8-0.9.0-py3-none-any.whl", hash = "sha256:91f6459a4b15c3aee2152e0cf59b7537ce199fe66b4df547dae63cfa92499e86"},
-    {file = "doc8-0.9.0.tar.gz", hash = "sha256:380b660474be40ce88b5f04fa93470449124dbc850a0318f2ef186162bc1360b"},
+    {file = "doc8-0.10.1-py3-none-any.whl", hash = "sha256:551a61df5915f0107e518d582fead47a0a56df7d4a9374feab955ea14dedea84"},
+    {file = "doc8-0.10.1.tar.gz", hash = "sha256:376e50f4e70a1ae935416ddfcf93db35dd5d4cc0e557f2ec72f0667d0ace4548"},
 ]
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
