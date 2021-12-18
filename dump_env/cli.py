@@ -3,7 +3,7 @@ import sys
 from typing import NoReturn
 
 from dump_env import dumper
-from dump_env.exceptions import StrictEnvException
+from dump_env.exceptions import StrictEnvError
 
 
 def _create_parser() -> argparse.ArgumentParser:
@@ -106,7 +106,7 @@ def main() -> NoReturn:
             args.source,
             args.strict_source,
         )
-    except StrictEnvException as exc:
+    except StrictEnvError as exc:
         sys.stderr.write('{0}\n'.format(str(exc)))
         sys.exit(1)
     else:

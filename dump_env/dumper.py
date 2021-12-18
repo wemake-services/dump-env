@@ -2,7 +2,7 @@ from collections import OrderedDict
 from os import environ
 from typing import Dict, List, Mapping, Optional, Set
 
-from dump_env.exceptions import StrictEnvException
+from dump_env.exceptions import StrictEnvError
 
 Store = Mapping[str, str]
 
@@ -81,7 +81,7 @@ def _assert_envs_exist(strict_keys: Set[str]) -> None:
     ]
 
     if missing_keys:
-        raise StrictEnvException(
+        raise StrictEnvError(
             'Missing env vars: {0}'.format(', '.join(missing_keys)),
         )
 
@@ -135,7 +135,7 @@ def dump(
         Ordered key-value pairs of dumped env and template variables.
 
     Raises:
-        StrictEnvException: when some variable from template is missing.
+        StrictEnvError: when some variable from template is missing.
 
     """
     if prefixes is None:
