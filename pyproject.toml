@@ -46,7 +46,7 @@ pytest-randomly = "^3.8"
 pytest = "^6.2"
 "delegator.py" = "^0.1.1"
 
-wemake-python-styleguide = "^0.15"
+wemake-python-styleguide = "^0.16"
 flake8-pytest-style = "^1.5"
 nitpick = "^0.27"
 
