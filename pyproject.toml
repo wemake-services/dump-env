@@ -51,7 +51,7 @@ flake8-pytest-style = "^1.5"
 nitpick = "^0.27"
 
 safety = "^1.10"
-mypy = "^0.910"
+mypy = "^0.920"
 
 sphinx = "4.1.2"
 sphinx-readable-theme = "^1.3"
