@@ -43,7 +43,7 @@ python = "^3.6"
 [tool.poetry.dev-dependencies]
 pytest-cov = "^3.0"
 pytest-randomly = "^3.10"
-pytest = "^6.2"
+pytest = "^7.0"
 "delegator.py" = "^0.1"
 
 wemake-python-styleguide = "^0.16"
