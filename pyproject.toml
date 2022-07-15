@@ -50,7 +50,7 @@ wemake-python-styleguide = "^0.16"
 flake8-pytest-style = "^1.5"
 nitpick = "^0.29"
 
-safety = "^2.0"
+safety = "^2.1"
 mypy = "^0.961"
 
 sphinx = "^5.0"
