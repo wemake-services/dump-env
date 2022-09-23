@@ -3,6 +3,17 @@
 We follow semantic versioning.
 
 
+## Version 1.4.0
+
+### Features
+
+- Drops `python3.6` support
+
+### Misc
+
+- Updates `poetry` to `>=1.2`
+
+
 ## Version 1.3.0
 
 ### Features
