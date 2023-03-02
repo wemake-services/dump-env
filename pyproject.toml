@@ -37,7 +37,7 @@ dump-env = "dump_env.cli:main"
 python = "^3.7"
 
 [tool.poetry.group.test.dependencies]
-pytest-cov = "^3.0"
+pytest-cov = ">=3,<5"
 pytest-randomly = "^3.10"
 pytest = "^7.0"
 "delegator.py" = "^0.1"
