@@ -1,11 +1,7 @@
-import delegator
-
-
-def test_help_option():
+def test_help_option(delegator):
     """Check that cli shows help."""
-    variables = delegator.run('dump-env --help')
-    assert 'show this help message and exit' in variables.out
-    assert '--template TEMPLATE' in variables.out
-    assert '--prefix PREFIX' in variables.out
-    assert '--strict' in variables.out
-    assert variables.subprocess.returncode == 0
+    variables = delegator('dump-env --help')
+    assert 'show this help message and exit' in variables
+    assert '--template TEMPLATE' in variables
+    assert '--prefix PREFIX' in variables
+    assert '--strict' in variables
