@@ -1,7 +1,7 @@
 # A utility tool to create ``.env`` files
 
 [![wemake.services](https://img.shields.io/badge/%20-wemake.services-green.svg?label=%20&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC%2FxhBQAAAAFzUkdCAK7OHOkAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP%2F%2F%2F5TvxDIAAAAIdFJOUwAjRA8xXANAL%2Bv0SAAAADNJREFUGNNjYCAIOJjRBdBFWMkVQeGzcHAwksJnAPPZGOGAASzPzAEHEGVsLExQwE7YswCb7AFZSF3bbAAAAABJRU5ErkJggg%3D%3D)](https://wemake-services.github.io)
-[![test](https://github.com/wemake-services/dump-env/workflows/test/badge.svg?branch=master&event=push)](https://github.com/wemake-services/dump-env/actions?query=workflow%3Atest)
+[![test](https://github.com/wemake-services/dump-env/actions/workflows/test.yml/badge.svg?branch=master&event=push)](https://github.com/wemake-services/dump-env/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/wemake-services/dump-env/branch/master/graph/badge.svg)](https://codecov.io/gh/wemake-services/dump-env)
 [![Python Version](https://img.shields.io/pypi/pyversions/dump-env.svg)](https://pypi.org/project/dump-env/)
 [![Docs](https://readthedocs.org/projects/dump-env/badge/?version=latest)](http://dump-env.readthedocs.io/en/latest/?badge=latest) [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
