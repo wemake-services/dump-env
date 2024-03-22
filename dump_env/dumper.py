@@ -1,12 +1,12 @@
 from collections import OrderedDict
 from os import environ
-from typing import Dict, List, Mapping, Optional, Set
+from typing import Dict, Final, List, Mapping, Optional, Set
 
 from dump_env.exceptions import StrictEnvError
 
 Store = Mapping[str, str]
 
-EMPTY_STRING = ''
+EMPTY_STRING: Final = ''
 
 
 def _parse(source: str) -> Store:
@@ -89,14 +89,12 @@ def _assert_envs_exist(strict_keys: Set[str]) -> None:
 def _source(source: str, strict_source: bool) -> Store:
     """Applies vars and assertions from source template ``.env`` file."""
     sourced: Dict[str, str] = {}
-
     sourced.update(_parse(source))
 
     if strict_source:
         _assert_envs_exist(set(sourced.keys()))
 
     sourced.update(_preload_specific_vars(set(sourced.keys())))
-
     return sourced
 
 

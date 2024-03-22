@@ -3,6 +3,18 @@
 We follow semantic versioning.
 
 
+## Version 1.5.0
+
+### Features
+
+- Drops `python3.7` and `python3.8` support
+- Adds `python3.11` and `python3.12` official support
+
+### Misc
+
+- Updates multiple dev dependencies
+
+
 ## Version 1.4.0
 
 ### Features
