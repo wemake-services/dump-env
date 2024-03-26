@@ -27,7 +27,7 @@ def multiple_variables_with_prefix():
 
 
 @pytest.mark.usefixtures('env_file')
-class TestParse(object):
+class TestParse:
     """Test parse function."""
 
     def test_parse_normal(self, env_file):
@@ -48,7 +48,7 @@ class TestParse(object):
 
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
-class TestDump(object):
+class TestDump:
     """Test dump function."""
 
     def test_with_default_arguments(self, monkeypatch):
@@ -112,7 +112,7 @@ class TestDump(object):
 
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
-class TestDumpRegression(object):
+class TestDumpRegression:
     """Test dump function (regression)."""
 
     def test_same_environ(self, monkeypatch, env_file):
