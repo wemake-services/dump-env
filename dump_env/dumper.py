@@ -166,8 +166,6 @@ def dump(
         strict_source: Whether all keys in source template must also be
            presented in env vars.
 
-        fill: Whether to populate template envs with values from env vars.
-
     Returns:
         Ordered key-value pairs of dumped env and template variables.
 
