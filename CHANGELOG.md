@@ -2,6 +2,12 @@
 
 We follow semantic versioning.
 
+## Version 1.6.0
+
+### Features
+
+- Adds template variables processing
+
 
 ## Version 1.5.0
 

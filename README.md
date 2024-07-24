@@ -116,6 +116,26 @@ VALUE=0
 VAR=foo
 ```
 
+You can use template string.
+
+```bash
+$ cat template.env
+SECRET_ANSWER=42
+SECRET_TOKEN=very secret string
+SECRET_VALUE=0
+SECRET_TEMPLATE=${SECRET_ANSWER}${SECRET_TOKEN}${SECRET_VALUE}
+```
+
+Template string must be below the variables that will fill it.
+
+```bash
+$ dump-env -t .env.template -p SECRET_
+SECRET_ANSWER=42
+SECRET_TEMPLATE=42very secret string0
+SECRET_TOKEN=very secret string
+SECRET_VALUE=0
+
+```
 #### Strict Source
 
 Using the `--strict-source` flag has the same effect as defining a `--strict` flag for every variable defined in the source template.

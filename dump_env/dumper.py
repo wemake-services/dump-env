@@ -1,3 +1,4 @@
+import re
 from collections import OrderedDict
 from os import environ
 from typing import Dict, Final, List, Mapping, Optional, Set
@@ -7,6 +8,7 @@ from dump_env.exceptions import StrictEnvError
 Store = Mapping[str, str]
 
 EMPTY_STRING: Final = ''
+VAR_TEMPLATE: Final = r'\${([a-zA-Z_]+)}'
 
 
 def _parse(source: str) -> Store:
@@ -20,7 +22,7 @@ def _parse(source: str) -> Store:
         Store with all keys and values.
 
     """
-    parsed_data = {}
+    parsed_data: Dict[str, str] = {}
 
     with open(source) as env_file:
         for line in env_file:
@@ -34,8 +36,7 @@ def _parse(source: str) -> Store:
             env_name, env_value = line.split('=', 1)
             env_name = env_name.strip()
             env_value = env_value.strip().strip('\'"')
-            parsed_data[env_name] = env_value
-
+            parsed_data[env_name] = _fill(env_value, parsed_data)
     return parsed_data
 
 
@@ -72,12 +73,17 @@ def _preload_specific_vars(env_keys: Set[str]) -> Store:
     return specified
 
 
-def _assert_envs_exist(strict_keys: Set[str]) -> None:
+def _assert_envs_exist(
+    strict_keys: Set[str],
+    envs: Dict[str, str] | None = None,
+) -> None:
     """Checks that all variables from strict keys do exists."""
+    if envs is None:
+        envs = dict(environ)
     missing_keys: List[str] = [
         strict_key
         for strict_key in strict_keys
-        if strict_key not in environ
+        if strict_key not in envs
     ]
 
     if missing_keys:
@@ -96,6 +102,37 @@ def _source(source: str, strict_source: bool) -> Store:
 
     sourced.update(_preload_specific_vars(set(sourced.keys())))
     return sourced
+
+
+def _fill(
+    env_value: str,
+    parsed_vars: Dict[str, str],
+) -> str:
+    """
+    Fill template env var.
+
+    Args:
+        env_value: Template env variable
+        parsed_vars: Parsed variables from ``.env`` file
+
+    Returns:
+        Filled env_value from parsed_vars
+
+    """
+    matches = re.findall(VAR_TEMPLATE, env_value)
+    if not matches:
+        return env_value
+    matches = [
+        match.replace('$', '')
+        for match in matches
+    ]
+    env_value = env_value.replace('$', '')
+    _assert_envs_exist(set(matches), parsed_vars)
+    format_vars = {
+        match: parsed_vars[match] for match in matches
+    }
+
+    return env_value.format(**format_vars)
 
 
 def dump(
@@ -128,6 +165,8 @@ def dump(
 
         strict_source: Whether all keys in source template must also be
            presented in env vars.
+
+        fill: Whether to populate template envs with values from env vars.
 
     Returns:
         Ordered key-value pairs of dumped env and template variables.
