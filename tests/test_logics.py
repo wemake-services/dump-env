@@ -46,6 +46,12 @@ class TestParse:
         assert 'COMMENTED_KEY' not in parsed_data
         assert 'KEY_WITH_NO_ASSIGNMENT' not in parsed_data
 
+    def test_fill_template_var(self, env_file_with_template):
+        """Ensures that given env keys are fill template env var."""
+        parsed_data = dumper._parse(env_file_with_template)  # noqa: WPS437
+        assert 'VAR_TEMPLATE' in parsed_data
+        assert parsed_data['VAR_TEMPLATE'] == 'value1'
+
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
 class TestDump:
