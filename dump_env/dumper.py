@@ -122,11 +122,10 @@ def _fill(
     Fill template env var if all vars has in store.
 
     Args:
-        env_value: Template env variable
-        parsed_vars: Parsed variables from ``.env`` file
+        store: Store of env variables
 
     Returns:
-        Filled env_value from parsed_vars
+        Filled store
 
     """
     for key, env_value in store.items():
