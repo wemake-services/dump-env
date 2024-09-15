@@ -16,6 +16,12 @@ def env_file_with_template():
 
 
 @pytest.fixture(scope='session')
+def env_file_with_wrong_template():
+    """Returns path for example env file with template var."""
+    return './tests/fixtures/.env_with_wrong_template.example'
+
+
+@pytest.fixture(scope='session')
 def delegator():
     """Mimics the old `delegator` dependency's API."""
     def factory(command):

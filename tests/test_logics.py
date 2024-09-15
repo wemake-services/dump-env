@@ -46,11 +46,31 @@ class TestParse:
         assert 'COMMENTED_KEY' not in parsed_data
         assert 'KEY_WITH_NO_ASSIGNMENT' not in parsed_data
 
+
+@pytest.mark.usefixtures('env_file')
+class TestFill:
+    """Test fill function."""
+
     def test_fill_template_var(self, env_file_with_template):
         """Ensures that given env keys are fill template env var."""
         parsed_data = dumper._parse(env_file_with_template)  # noqa: WPS437
-        assert 'VAR_TEMPLATE' in parsed_data
-        assert parsed_data['VAR_TEMPLATE'] == 'value1'
+        filled_data = dumper._fill(parsed_data)  # noqa: WPS437
+        assert 'VAR_TEMPLATE' in filled_data
+        assert filled_data['VAR_TEMPLATE'] == 'value1 value2'
+
+    def test_parse_variable_names(self):
+        """Test template variable parser."""
+        template = '${FIRST_VALUE} ${SECOND_VALUE}'
+        variable_names = dumper._parse_variable_names(template)  # noqa: WPS437
+        assert variable_names == ['FIRST_VALUE', 'SECOND_VALUE']
+
+    def test_fill_wrong_template(self, env_file_with_wrong_template):
+        """Ensures that an incorrectly filled template is not filled in."""
+        parsed_data = dumper._parse(  # noqa: WPS437
+            env_file_with_wrong_template,
+        )
+        filled_data = dumper._fill(parsed_data)  # noqa: WPS437
+        assert parsed_data == filled_data
 
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
@@ -115,6 +135,11 @@ class TestDump:
 
         assert len(dump_result.keys()) == 1
         assert dump_result['key'] == 'another_value'
+
+    def test_dump_with_fill_argument(self, env_file_with_template):
+        """Check fill arguments works."""
+        dump_result = dumper.dump(template=env_file_with_template, fill=True)
+        assert dump_result['VAR_TEMPLATE'] == 'value1 value2'
 
 
 @pytest.mark.usefixtures('monkeypatch', 'env_file')
