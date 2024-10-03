@@ -7,6 +7,7 @@ from dump_env.exceptions import StrictEnvError
 Store = Mapping[str, str]
 
 EMPTY_STRING: Final = ''
+VAR_TEMPLATE: Final = r'\${([a-zA-Z_]+)}'
 
 
 def _parse(source: str) -> Store:
@@ -20,7 +21,7 @@ def _parse(source: str) -> Store:
         Store with all keys and values.
 
     """
-    parsed_data = {}
+    parsed_data: Dict[str, str] = {}
 
     with open(source) as env_file:
         for line in env_file:
@@ -35,7 +36,6 @@ def _parse(source: str) -> Store:
             env_name = env_name.strip()
             env_value = env_value.strip().strip('\'"')
             parsed_data[env_name] = env_value
-
     return parsed_data
 
 
@@ -98,12 +98,58 @@ def _source(source: str, strict_source: bool) -> Store:
     return sourced
 
 
-def dump(
+def _parse_variable_names(template_var: str) -> List[str]:
+    """Parse variables from template string."""
+    names = []
+    name_begin_idx: int = -1
+    name_end_idx: int = -1
+    for idx in range(len(template_var) - 1):
+        if template_var[idx] == '$' and template_var[idx + 1] == '{':
+            name_begin_idx = idx + 2
+        if template_var[idx + 1] == '}':
+            name_end_idx = idx + 1
+        if name_begin_idx < name_end_idx:
+            names.append(template_var[name_begin_idx: name_end_idx])
+            name_begin_idx = -1
+            name_end_idx = -1
+    return names
+
+
+def _fill(
+    store: Dict[str, str],
+) -> Dict[str, str]:
+    """
+    Fill template env var if all vars has in store.
+
+    Args:
+        store: Store of env variables
+
+    Returns:
+        Filled store
+
+    """
+    for key, env_value in store.items():
+        if '${' in env_value and '}' in env_value:
+            variables = _parse_variable_names(env_value)
+            form = {
+                env_variable: store.get(env_variable)
+                for env_variable in variables
+                if store.get(env_variable) is not None
+            }
+            if form and len(form.keys()) == len(variables):
+                filled_value = env_value.format(**form)
+                filled_value = filled_value.replace('$', '')
+                store[key] = filled_value
+    return store
+
+
+def dump(  # noqa: WPS211, C901
     template: str = EMPTY_STRING,
     prefixes: Optional[List[str]] = None,
     strict_keys: Optional[Set[str]] = None,
     source: str = EMPTY_STRING,
     strict_source: bool = False,
+    fill: bool = False,
 ) -> Dict[str, str]:
     """
     This function is used to dump ``.env`` files.
@@ -128,6 +174,8 @@ def dump(
 
         strict_source: Whether all keys in source template must also be
            presented in env vars.
+
+        fill: Fill all variables in template env file.
 
     Returns:
         Ordered key-value pairs of dumped env and template variables.
@@ -156,5 +204,7 @@ def dump(
     for prefix in prefixes:
         store.update(_preload_existing_vars(prefix))
 
+    if fill:
+        store.update(_fill(store))
     # Sort keys and keep them ordered:
     return OrderedDict(sorted(store.items()))

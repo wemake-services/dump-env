@@ -40,6 +40,11 @@ def _create_parser() -> argparse.ArgumentParser:
         action='store_true',
         help='All source template variables should exist in os envs',
     )
+    parser.add_argument(
+        '--fill',
+        action='store_true',
+        help='Fill variables in .env.template file',
+    )
     return parser
 
 
@@ -95,6 +100,14 @@ def main() -> NoReturn:
 
             $ dump-env -s .env.template --strict-source
 
+        This example will fill all variables keys in the source template
+        from variables in this template file:
+
+        .. code:: bash
+
+            $ dump-env -s .env.template --fill
+
+
     """
     args = _create_parser().parse_args()
     strict_vars = set(args.strict) if args.strict else None
@@ -106,6 +119,7 @@ def main() -> NoReturn:
             strict_vars,
             args.source,
             args.strict_source,
+            args.fill,
         )
     except StrictEnvError as exc:
         sys.stderr.write('{0}\n'.format(str(exc)))
