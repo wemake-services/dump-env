@@ -6,6 +6,43 @@ from dump_env import dumper
 from dump_env.exceptions import StrictEnvError
 
 
+def needs_quotes(value: str) -> bool:
+    """
+    Check if the value needs to be quoted.
+
+    Args:
+        value (str): The value to check.
+
+    Returns:
+        bool: True if the value needs to be quoted, False otherwise.
+    """
+    return (
+        not value
+        or ' ' in value
+        or '\n' in value
+        or '=' in value
+        or '"' in value
+        or "'" in value
+    )
+
+
+def escape(value: str) -> str:
+    """
+    Escape the value for use in an environment variable.
+
+    Args:
+        value (str): The value to escape.
+
+    Returns:
+        str: The escaped value.
+    """
+    return (
+        value
+        .replace('\\', '\\\\') # Backslashes need to be escaped
+        .replace('"', '\\"') # Quotes in the value need to be escaped
+    )
+
+
 def _create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -112,5 +149,7 @@ def main() -> NoReturn:
         sys.exit(1)
     else:
         for env_name, env_value in variables.items():
+            if needs_quotes(env_value):
+                env_value = '"{0}"'.format(escape(env_value))
             sys.stdout.write('{0}={1}\n'.format(env_name, env_value))
         sys.exit(0)
