@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+
 from dotenv import dotenv_values
 
 
@@ -20,17 +21,15 @@ def test_complex_variables_compatibility(monkeypatch, tmpdir, delegator):
         'BACKSLASH_VAR': '\\\\',
     }
 
-    prefix = 'MY_PREFIX_'
-
     # Set environment variables
     for key, value in complex_vars.items():
-        monkeypatch.setenv(f'{prefix}{key}', value)
+        monkeypatch.setenv(f'MY_PREFIX_{key}', value)
 
     # Create temporary .env file
     env_file = Path(tmpdir) / '.env'
 
     # Dump environment variables to file
-    delegator(f'dump-env -p {prefix} > {env_file}')
+    delegator(f'dump-env -p MY_PREFIX_ > {env_file}')
 
     # Load variables using python-dotenv
     loaded_vars = dotenv_values(env_file)

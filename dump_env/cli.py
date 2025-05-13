@@ -5,8 +5,11 @@ from typing import NoReturn
 from dump_env import dumper
 from dump_env.exceptions import StrictEnvError
 
+# Characters that require the value to be quoted
+QUOTE_CHARS = (' ', '\n', '=', '"', "'")
 
-def needs_quotes(value: str) -> bool:
+
+def needs_quotes(raw_env_value: str) -> bool:
     """
     Check if the value needs to be quoted.
 
@@ -16,17 +19,12 @@ def needs_quotes(value: str) -> bool:
     Returns:
         bool: True if the value needs to be quoted, False otherwise.
     """
-    return (
-        not value
-        or ' ' in value
-        or '\n' in value
-        or '=' in value
-        or '"' in value
-        or "'" in value
-    )
+    if not raw_env_value:
+        return False
+    return any(char in raw_env_value for char in QUOTE_CHARS)
 
 
-def escape(value: str) -> str:
+def escape(raw_env_value: str) -> str:
     """
     Escape the value for use in an environment variable.
 
@@ -37,9 +35,11 @@ def escape(value: str) -> str:
         str: The escaped value.
     """
     return (
-        value
-        .replace('\\', '\\\\') # Backslashes need to be escaped
-        .replace('"', '\\"') # Quotes in the value need to be escaped
+        raw_env_value
+        # Backslashes need to be escaped
+        .replace('\\', '\\\\')  # noqa: WPS348, WPS342
+        # Quotes in the value need to be escaped
+        .replace('"', '\\"')  # noqa: WPS348, WPS342
     )
 
 
