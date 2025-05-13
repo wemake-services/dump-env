@@ -30,6 +30,12 @@ To run linting:
 flake8 .
 ```
 
+To update snapshots:
+
+```bash
+pytest --update-snapshot
+```
+
 These steps are mandatory during the CI.
 
 ## Type checks

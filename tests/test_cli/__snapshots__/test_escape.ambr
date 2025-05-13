@@ -1,0 +1,18 @@
+# serializer version: 1
+# name: test_quote_escape
+  '''
+  VALUE="{
+      \"key\": \"value\",
+      \"key2\": \"multi\\nline\\nvalue\"
+  }"
+  
+  '''
+# ---
+# name: test_simple_multiline
+  '''
+  VALUE="1
+  2
+  3"
+  
+  '''
+# ---
