@@ -33,7 +33,7 @@ flake8 .
 To update snapshots:
 
 ```bash
-pytest --update-snapshot
+pytest --snapshot-update
 ```
 
 These steps are mandatory during the CI.
