@@ -16,7 +16,7 @@ from pathlib import Path
 import sphinx_readable_theme
 import tomli
 
-sys.path.insert(0, Path.resolve('..').as_posix())
+sys.path.insert(0, Path('..').resolve().as_posix())
 
 
 # -- Project information -----------------------------------------------------
