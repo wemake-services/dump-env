@@ -24,7 +24,7 @@ def _parse(source: str) -> Store:
     """
     parsed_data = {}
 
-    with Path.open(source, encoding='utf-8') as env_file:
+    with Path.open(Path(source), encoding='utf-8') as env_file:
         for line in env_file:
             line = line.strip()  # noqa: PLW2901
 
