@@ -144,14 +144,6 @@ mccabe.max-complexity = 6
 pydocstyle.convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
-# "dotenv_linter/grammar/parser.py" = [
-#   "D205", # multiline grammar definitions
-#   "D403", # lowercase docstrings are fine
-#   "D415", # we cannot add `.` in the end, it is a grammar definition
-# ]
-# "dotenv_linter/grammar/lexer.py" = [
-#   "N802", # lexer name patterns
-# ]
 "tests/*.py" = [
   "S101", # asserts
   "S404", # subprocess
