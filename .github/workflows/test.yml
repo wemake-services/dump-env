@@ -24,6 +24,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
@@ -34,7 +36,7 @@ jobs:
         curl -sSL "https://install.python-poetry.org" | python
 
         # Adding `poetry` to `$PATH`:
-        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+        echo "$HOME/.poetry/bin" >> "$GITHUB_PATH"
 
     - name: Install dependencies
       run: |
@@ -44,6 +46,8 @@ jobs:
 
     - name: Run tests
       run: |
+        poetry run ruff check --exit-non-zero-on-fix --diff
+        poetry run ruff format --check --diff
         poetry run flake8 .
         poetry run mypy dump_env
         poetry run pytest
@@ -52,6 +56,6 @@ jobs:
         poetry run pip check
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@ad3126e916f78f00edff4ed0317cf185271ccc2d
       with:
         file: ./coverage.xml

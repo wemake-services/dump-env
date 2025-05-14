@@ -16,7 +16,7 @@ To activate your `virtualenv` run `poetry shell`.
 
 ## Tests
 
-We use `pytest` and `flake8` for quality control.
+We use `pytest`, `flake8` and various pre-commit hooks for quality control.
 
 To run all tests:
 
@@ -28,6 +28,7 @@ To run linting:
 
 ```bash
 flake8 .
+pre-commit run --all-files
 ```
 
 These steps are mandatory during the CI.

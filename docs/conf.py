@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # Configuration file for the Sphinx documentation builder.
 #
 # This file does only contain a selection of the most common options. For a
@@ -12,25 +10,26 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
-import os
 import sys
+from pathlib import Path
 
 import sphinx_readable_theme
 import tomli
 
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, Path.resolve('..').as_posix())
 
 
 # -- Project information -----------------------------------------------------
 
+
 def _get_project_meta():
-    with open('../pyproject.toml', mode='rb') as pyproject:
+    with Path.open('../pyproject.toml', mode='rb') as pyproject:
         return tomli.load(pyproject)['tool']['poetry']
 
 
 pkg_meta = _get_project_meta()
 project = str(pkg_meta['name'])
-copyright = '2018, Nikita Sobolev'  # noqa: WPS125
+copyright = '2018, Nikita Sobolev'  # noqa: WPS125, A001
 author = 'Nikita Sobolev'
 
 # The short X.Y version
@@ -54,10 +53,8 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
-
     # Used to write beautiful docstrings:
     'sphinx.ext.napoleon',
-
     # Used to include .md files:
     'm2r2',
 ]
