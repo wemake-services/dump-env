@@ -136,7 +136,7 @@ class TestDumpRegression:
         # Should contain the value from env, not from template:
         assert dump_result['NORMAL_KEY'] == 'test'
 
-    def test_multiple_vars_with_prefix(self, monkeypatch, env_file):
+    def test_multiple_vars_with_prefix(self, monkeypatch, env_file, snapshot):
         """Dumper with prefix option should return all prefixed variables."""
         monkeypatch.setattr(
             dumper,
@@ -146,5 +146,4 @@ class TestDumpRegression:
         dump_result = dumper.dump(template=env_file, prefixes=['SECRET_'])
 
         # Only prefix should be changed, other parts should not:
-        assert dump_result['DJANGO_SECRET_KEY'] == 'test'  # noqa: S105
-        assert dump_result['SECRET_VALUE'] == 'value'  # noqa: S105
+        assert dump_result == snapshot

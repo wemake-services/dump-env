@@ -1,0 +1,8 @@
+# serializer version: 1
+# name: TestDumpRegression.test_multiple_vars_with_prefix
+  OrderedDict({
+    'DJANGO_SECRET_KEY': 'test',
+    'NORMAL_KEY': 'SOMEVALUE',
+    'SECRET_VALUE': 'value',
+  })
+# ---

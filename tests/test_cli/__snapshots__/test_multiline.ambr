@@ -1,0 +1,9 @@
+# serializer version: 1
+# name: test_simple_multiline
+  '''
+  VALUE="1
+  2
+  3"
+  
+  '''
+# ---

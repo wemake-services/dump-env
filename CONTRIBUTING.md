@@ -30,6 +30,12 @@ To run linting:
 flake8 .
 ```
 
+To update snapshots:
+
+```bash
+pytest --snapshot-update
+```
+
 These steps are mandatory during the CI.
 
 For a fast feedback loop you can run the pre-commit
