@@ -37,9 +37,9 @@ def escape(raw_env_value: str) -> str:
     return (
         raw_env_value
         # Backslashes need to be escaped
-        .replace('\\', '\\\\')
+        .replace('\\', '\\\\')  # noqa: WPS348, WPS342
         # Quotes in the value need to be escaped
-        .replace('"', '\\"')
+        .replace('"', '\\"')  # noqa: WPS348, WPS342
     )
 
 

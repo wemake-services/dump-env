@@ -21,12 +21,12 @@ def test_complex_variables_compatibility(monkeypatch, tmpdir, delegator):
             },
             indent=4,
         ),
-        'BACKSLASH_VAR': '\\\\',
+        'BACKSLASH_VAR': '\\\\',  # noqa: WPS342
     }
 
     # Set environment variables
-    for key, value in complex_vars.items():
-        monkeypatch.setenv(f'MY_PREFIX_{key}', value)
+    for key, env_value in complex_vars.items():
+        monkeypatch.setenv(f'MY_PREFIX_{key}', env_value)
 
     # Create temporary .env file
     env_file = Path(tmpdir) / '.env'
@@ -38,6 +38,6 @@ def test_complex_variables_compatibility(monkeypatch, tmpdir, delegator):
     loaded_vars = dotenv_values(env_file)
 
     # Compare the loaded variables with original ones
-    for key, value in complex_vars.items():
+    for key, env_value in complex_vars.items():
         assert key in loaded_vars, f'Key {key} not found in loaded variables'
-        assert loaded_vars[key] == value, f'Value mismatch for key {key}'
+        assert loaded_vars[key] == env_value, f'Value mismatch for key {key}'
