@@ -1,6 +1,8 @@
 from collections import OrderedDict
+from collections.abc import Mapping
 from os import environ
-from typing import Dict, Final, List, Mapping, Optional, Set
+from pathlib import Path
+from typing import Final
 
 from dump_env.exceptions import StrictEnvError
 
@@ -22,9 +24,9 @@ def _parse(source: str) -> Store:
     """
     parsed_data = {}
 
-    with open(source) as env_file:
+    with Path(source).open(encoding='utf-8') as env_file:
         for line in env_file:
-            line = line.strip()  # noqa: WPS440
+            line = line.strip()  # noqa: PLW2901
 
             if not line or line.startswith('#') or '=' not in line:
                 # Ignore comments and lines without assignment.
@@ -58,7 +60,7 @@ def _preload_existing_vars(prefix: str) -> Store:
     return prefixed
 
 
-def _preload_specific_vars(env_keys: Set[str]) -> Store:
+def _preload_specific_vars(env_keys: set[str]) -> Store:
     """Preloads env vars from environ in the given set."""
     specified = {}
 
@@ -72,23 +74,21 @@ def _preload_specific_vars(env_keys: Set[str]) -> Store:
     return specified
 
 
-def _assert_envs_exist(strict_keys: Set[str]) -> None:
+def _assert_envs_exist(strict_keys: set[str]) -> None:
     """Checks that all variables from strict keys do exists."""
-    missing_keys: List[str] = [
-        strict_key
-        for strict_key in strict_keys
-        if strict_key not in environ
+    missing_keys: list[str] = [
+        strict_key for strict_key in strict_keys if strict_key not in environ
     ]
 
     if missing_keys:
         raise StrictEnvError(
-            'Missing env vars: {0}'.format(', '.join(missing_keys)),
+            'Missing env vars: {}'.format(', '.join(missing_keys)),
         )
 
 
-def _source(source: str, strict_source: bool) -> Store:
+def _source(source: str, strict_source: bool) -> Store:  # noqa: FBT001
     """Applies vars and assertions from source template ``.env`` file."""
-    sourced: Dict[str, str] = {}
+    sourced: dict[str, str] = {}
     sourced.update(_parse(source))
 
     if strict_source:
@@ -100,11 +100,11 @@ def _source(source: str, strict_source: bool) -> Store:
 
 def dump(
     template: str = EMPTY_STRING,
-    prefixes: Optional[List[str]] = None,
-    strict_keys: Optional[Set[str]] = None,
+    prefixes: list[str] | None = None,
+    strict_keys: set[str] | None = None,
     source: str = EMPTY_STRING,
-    strict_source: bool = False,
-) -> Dict[str, str]:
+    strict_source: bool = False,  # noqa: FBT001, FBT002
+) -> dict[str, str]:
     """
     This function is used to dump ``.env`` files.
 
@@ -142,7 +142,7 @@ def dump(
     if strict_keys:
         _assert_envs_exist(strict_keys)
 
-    store: Dict[str, str] = {}
+    store: dict[str, str] = {}
 
     if source:
         # Loading env values from source template file:

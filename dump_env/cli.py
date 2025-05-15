@@ -145,11 +145,11 @@ def main() -> NoReturn:
             args.strict_source,
         )
     except StrictEnvError as exc:
-        sys.stderr.write('{0}\n'.format(str(exc)))
+        sys.stderr.write(f'{exc!s}\n')
         sys.exit(1)
     else:
         for env_name, env_value in variables.items():
             if needs_quotes(env_value):
                 env_value = '"{0}"'.format(escape(env_value))
-            sys.stdout.write('{0}={1}\n'.format(env_name, env_value))
+            sys.stdout.write(f'{env_name}={env_value}\n')
         sys.exit(0)
