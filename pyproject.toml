@@ -17,7 +17,7 @@ homepage = "https://dump-env.readthedocs.io"
 keywords = [
   "dotenv",
   ".env",
-  "tempaltes",
+  "templates",
   "secrets",
   "CI/CD"
 ]
