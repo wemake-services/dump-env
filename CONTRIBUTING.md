@@ -28,10 +28,16 @@ To run linting:
 
 ```bash
 flake8 .
-pre-commit run --all-files
 ```
 
 These steps are mandatory during the CI.
+
+For a fast feedback loop you can run the pre-commit
+hooks locally on all files via:
+
+```bash
+pre-commit run --all-files
+```
 
 ## Type checks
 

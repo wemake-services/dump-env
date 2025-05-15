@@ -29,7 +29,7 @@ def _get_project_meta():
 
 pkg_meta = _get_project_meta()
 project = str(pkg_meta['name'])
-copyright = '2018, Nikita Sobolev'  # noqa: WPS125, A001
+copyright = '2018, Nikita Sobolev'  # noqa: A001
 author = 'Nikita Sobolev'
 
 # The short X.Y version
