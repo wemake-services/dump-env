@@ -14,10 +14,13 @@ def test_complex_variables_compatibility(monkeypatch, tmpdir, delegator):
         'QUOTED_VAR': '"double quoted" and \'single quoted\'',
         'SPACES_VAR': '  spaces  around  ',
         'EMPTY_VAR': '',
-        'JSON_VAR': json.dumps({
-            'key': 'value',
-            'key2': 'multi\nline\nvalue',
-        }, indent=4),
+        'JSON_VAR': json.dumps(
+            {
+                'key': 'value',
+                'key2': 'multi\nline\nvalue',
+            },
+            indent=4,
+        ),
         'BACKSLASH_VAR': '\\\\',
     }
 
@@ -36,5 +39,5 @@ def test_complex_variables_compatibility(monkeypatch, tmpdir, delegator):
 
     # Compare the loaded variables with original ones
     for key, value in complex_vars.items():
-        assert key in loaded_vars, f"Key {key} not found in loaded variables"
-        assert loaded_vars[key] == value, f"Value mismatch for key {key}"
+        assert key in loaded_vars, f'Key {key} not found in loaded variables'
+        assert loaded_vars[key] == value, f'Value mismatch for key {key}'
