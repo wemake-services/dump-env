@@ -6,7 +6,7 @@ from dump_env import dumper
 def simple_environ(prefix='', env_value='value'):
     """Returns dict with example environment with given prefix and value."""
     return {
-        '{0}key'.format(prefix): env_value,
+        f'{prefix}key': env_value,
         'a': 'b',
     }
 
@@ -32,7 +32,7 @@ class TestParse:
 
     def test_parse_normal(self, env_file):
         """Ensures that given env keys are present in output."""
-        parsed_data = dumper._parse(env_file)  # noqa: WPS437
+        parsed_data = dumper._parse(env_file)  # noqa: SLF001
 
         assert isinstance(parsed_data, dict)
         assert 'NORMAL_KEY' in parsed_data
@@ -40,7 +40,7 @@ class TestParse:
 
     def test_parse_exceptions(self, env_file):
         """Ensures that unknown env keys are not present in output."""
-        parsed_data = dumper._parse(env_file)  # noqa: WPS437
+        parsed_data = dumper._parse(env_file)  # noqa: SLF001
 
         assert isinstance(parsed_data, dict)
         assert 'COMMENTED_KEY' not in parsed_data
@@ -64,7 +64,9 @@ class TestDump:
         """Dumper with prefix option should return requested variables."""
         prefix = 'P_'
         monkeypatch.setattr(
-            dumper, 'environ', simple_environ(prefix=prefix),
+            dumper,
+            'environ',
+            simple_environ(prefix=prefix),
         )
         dump_result = dumper.dump(prefixes=[prefix])
 
@@ -85,7 +87,9 @@ class TestDump:
         """Check both prefix and template options works together."""
         prefix = 'P_'
         monkeypatch.setattr(
-            dumper, 'environ', simple_environ(prefix=prefix),
+            dumper,
+            'environ',
+            simple_environ(prefix=prefix),
         )
         dump_result = dumper.dump(template=env_file, prefixes=[prefix])
 
@@ -97,12 +101,17 @@ class TestDump:
         """With multiple prefixes further prefixed variable replace previous."""
         first_prefix = 'P1_'
         monkeypatch.setattr(
-            dumper, 'environ', simple_environ(prefix=first_prefix),
+            dumper,
+            'environ',
+            simple_environ(prefix=first_prefix),
         )
         second_prefix = 'P2_'
         monkeypatch.setattr(
-            dumper, 'environ', simple_environ(
-                prefix=second_prefix, env_value='another_value',
+            dumper,
+            'environ',
+            simple_environ(
+                prefix=second_prefix,
+                env_value='another_value',
             ),
         )
         dump_result = dumper.dump(prefixes=[first_prefix, second_prefix])
@@ -118,7 +127,9 @@ class TestDumpRegression:
     def test_same_environ(self, monkeypatch, env_file):
         """Dumper should return unmodified environment variables by default."""
         monkeypatch.setattr(
-            dumper, 'environ', same_environ(),
+            dumper,
+            'environ',
+            same_environ(),
         )
         dump_result = dumper.dump(template=env_file)
 
@@ -128,10 +139,12 @@ class TestDumpRegression:
     def test_multiple_vars_with_prefix(self, monkeypatch, env_file):
         """Dumper with prefix option should return all prefixed variables."""
         monkeypatch.setattr(
-            dumper, 'environ', multiple_variables_with_prefix(),
+            dumper,
+            'environ',
+            multiple_variables_with_prefix(),
         )
         dump_result = dumper.dump(template=env_file, prefixes=['SECRET_'])
 
         # Only prefix should be changed, other parts should not:
-        assert dump_result['DJANGO_SECRET_KEY'] == 'test'
-        assert dump_result['SECRET_VALUE'] == 'value'
+        assert dump_result['DJANGO_SECRET_KEY'] == 'test'  # noqa: S105
+        assert dump_result['SECRET_VALUE'] == 'value'  # noqa: S105
