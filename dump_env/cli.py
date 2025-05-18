@@ -1,6 +1,6 @@
 import argparse
 import sys
-from typing import NoReturn
+from typing import Final, NoReturn
 
 from dump_env import dumper
 from dump_env.exceptions import StrictEnvError
