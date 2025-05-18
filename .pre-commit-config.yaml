@@ -3,7 +3,6 @@ repos:
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
-        exclude: '^.*?/__snapshots__/.*\.ambr$'
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-toml
@@ -47,6 +46,8 @@ repos:
   - repo: meta
     hooks:
       - id: check-useless-excludes
+
+exclude: ^.*?/__snapshots__/.*\.ambr$
 
 ci:
   autofix_commit_msg: "[pre-commit.ci] auto fixes from pre-commit.com hooks"
