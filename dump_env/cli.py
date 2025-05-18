@@ -6,7 +6,7 @@ from dump_env import dumper
 from dump_env.exceptions import StrictEnvError
 
 # Characters that require the value to be quoted
-QUOTE_CHARS = (' ', '\n', '=', '"', "'")
+QUOTE_CHARS: Final = (' ', '\n', '=', '"', "'")
 
 
 def needs_quotes(raw_env_value: str) -> bool:
