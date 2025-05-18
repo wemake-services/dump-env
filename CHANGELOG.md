@@ -3,6 +3,15 @@
 We follow semantic versioning.
 
 
+## Version 1.6.0
+
+### Features
+
+- Drops `python3.9` support
+- Adds `python3.13` support
+- Adds support for multiline values
+
+
 ## Version 1.5.0
 
 ### Features

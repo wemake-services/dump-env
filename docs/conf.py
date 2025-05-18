@@ -13,7 +13,6 @@
 import sys
 from pathlib import Path
 
-import sphinx_readable_theme
 import tomli
 
 sys.path.insert(0, Path('..').resolve().as_posix())
@@ -23,7 +22,7 @@ sys.path.insert(0, Path('..').resolve().as_posix())
 
 
 def _get_project_meta():
-    with Path.open('../pyproject.toml', mode='rb') as pyproject:
+    with Path('../pyproject.toml').open(mode='rb') as pyproject:
         return tomli.load(pyproject)['tool']['poetry']
 
 
@@ -41,7 +40,7 @@ release = version
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-needs_sphinx = '7.2'
+needs_sphinx = '8.1'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -56,7 +55,7 @@ extensions = [
     # Used to write beautiful docstrings:
     'sphinx.ext.napoleon',
     # Used to include .md files:
-    'm2r2',
+    'myst_parser',
 ]
 
 autoclass_content = 'class'
@@ -88,15 +87,17 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
-add_module_names = False
-
 
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme_path = [sphinx_readable_theme.get_html_theme_path()]
-html_theme = 'readable'
+html_theme = 'furo'
+
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+html_theme_options = {}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -108,11 +109,4 @@ html_static_path = []
 #
 # This is required for the alabaster theme
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
-html_sidebars = {
-    '**': [
-        'badges.html',
-        'localtoc.html',
-        'moreinfo.html',
-        'searchbox.html',
-    ],
-}
+html_sidebars = {}
