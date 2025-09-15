@@ -109,7 +109,7 @@ def _parse_variable_names(template_var: str) -> List[str]:
         if template_var[idx + 1] == '}':
             name_end_idx = idx + 1
         if name_begin_idx < name_end_idx:
-            names.append(template_var[name_begin_idx: name_end_idx])
+            names.append(template_var[name_begin_idx:name_end_idx])
             name_begin_idx = -1
             name_end_idx = -1
     return names
