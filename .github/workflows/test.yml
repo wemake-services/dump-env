@@ -20,12 +20,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
+      with:
+        persist-credentials: false
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -34,7 +36,7 @@ jobs:
         curl -sSL "https://install.python-poetry.org" | python
 
         # Adding `poetry` to `$PATH`:
-        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+        echo "$HOME/.poetry/bin" >> "$GITHUB_PATH"
 
     - name: Install dependencies
       run: |
@@ -44,14 +46,15 @@ jobs:
 
     - name: Run tests
       run: |
+        poetry run ruff check --exit-non-zero-on-fix --diff
+        poetry run ruff format --check --diff
         poetry run flake8 .
         poetry run mypy dump_env
         poetry run pytest
-        poetry run doc8 -q docs
         poetry check
         poetry run pip check
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
-        file: ./coverage.xml
+        files: ./coverage.xml

@@ -1,3 +1,6 @@
+from pathlib import Path
+
+
 def test_simple_usage(monkeypatch, delegator):
     """Check that cli shows prefixed variables."""
     monkeypatch.setenv('SOM_TT_VALUE', '1')
@@ -14,7 +17,7 @@ def test_both_options(monkeypatch, env_file, delegator):
     """
     monkeypatch.setenv('SOM_TT_VALUE', '1')
 
-    variables = delegator('dump-env -p SOM_TT_ -t {0}'.format(env_file))
+    variables = delegator(f'dump-env -p SOM_TT_ -t {env_file}')
     assert variables == 'NORMAL_KEY=SOMEVALUE\nVALUE=1\n'
 
 
@@ -37,7 +40,5 @@ def test_simple_usage_file_output(monkeypatch, tmpdir, delegator):
 
     filename = tmpdir.mkdir('tests').join('.env').strpath
 
-    delegator('dump-env -p SOM_TT_ > {0}'.format(filename))
-
-    with open(filename) as env_file:
-        assert env_file.read() == 'VALUE=1\n'
+    delegator(f'dump-env -p SOM_TT_ > {filename}')
+    assert Path(filename).read_text(encoding='utf-8') == 'VALUE=1\n'

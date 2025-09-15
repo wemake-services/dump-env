@@ -1,9 +1,46 @@
 import argparse
 import sys
-from typing import NoReturn
+from typing import Final, NoReturn
 
 from dump_env import dumper
 from dump_env.exceptions import StrictEnvError
+
+# Characters that require the value to be quoted
+QUOTE_CHARS: Final = (' ', '\n', '=', '"', "'")
+
+
+def needs_quotes(raw_env_value: str) -> bool:
+    """
+    Check if the value needs to be quoted.
+
+    Args:
+        raw_env_value (str): The value to check.
+
+    Returns:
+        bool: True if the value needs to be quoted, False otherwise.
+    """
+    if not raw_env_value:
+        return False
+    return any(char in raw_env_value for char in QUOTE_CHARS)
+
+
+def escape(raw_env_value: str) -> str:
+    """
+    Escape the value for use in an environment variable.
+
+    Args:
+        raw_env_value (str): The value to escape.
+
+    Returns:
+        str: The escaped value.
+    """
+    return (
+        raw_env_value
+        # Backslashes need to be escaped
+        .replace('\\', '\\\\')  # noqa: WPS348, WPS342
+        # Quotes in the value need to be escaped
+        .replace('"', '\\"')  # noqa: WPS348, WPS342
+    )
 
 
 def _create_parser() -> argparse.ArgumentParser:
@@ -122,9 +159,11 @@ def main() -> NoReturn:
             args.fill,
         )
     except StrictEnvError as exc:
-        sys.stderr.write('{0}\n'.format(str(exc)))
+        sys.stderr.write(f'{exc!s}\n')
         sys.exit(1)
     else:
         for env_name, env_value in variables.items():
-            sys.stdout.write('{0}={1}\n'.format(env_name, env_value))
+            if needs_quotes(env_value):
+                env_value = f'"{escape(env_value)}"'  # noqa: PLW2901
+            sys.stdout.write(f'{env_name}={env_value}\n')
         sys.exit(0)

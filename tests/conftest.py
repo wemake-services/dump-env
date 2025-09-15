@@ -24,14 +24,16 @@ def env_file_with_wrong_template():
 @pytest.fixture(scope='session')
 def delegator():
     """Mimics the old `delegator` dependency's API."""
+
     def factory(command):
         try:
-            return subprocess.check_output(
+            return subprocess.check_output(  # noqa: S602
                 command,
                 universal_newlines=True,
-                shell=True,  # noqa: S602
+                shell=True,
                 stderr=subprocess.PIPE,
             )
         except subprocess.CalledProcessError as exc:
             return (exc.returncode, exc.stderr)
+
     return factory
