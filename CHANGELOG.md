@@ -7,6 +7,7 @@ We follow semantic versioning.
 
 ### Features
 
+- Adds `python3.14` support
 - Adds `--no-quote-values` CLI option to disable quoted output for values
   with spaces and other special characters
 
