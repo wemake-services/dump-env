@@ -25,7 +25,7 @@ def delegator() -> DelegatorFactory:
 
     def factory(command: str) -> CommandResult:
         try:
-            return subprocess.check_output(  # noqa: S602
+            return subprocess.check_output(  # ruff:ignore[subprocess-popen-with-shell-equals-true]
                 command,
                 universal_newlines=True,
                 shell=True,

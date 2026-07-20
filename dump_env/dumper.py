@@ -26,7 +26,7 @@ def _parse(source: str) -> Store:
 
     with Path(source).open(encoding='utf-8') as env_file:
         for line in env_file:
-            line = line.strip()  # noqa: PLW2901
+            line = line.strip()  # ruff:ignore[redefined-loop-name]
 
             if not line or line.startswith('#') or '=' not in line:
                 # Ignore comments and lines without assignment.
@@ -86,7 +86,7 @@ def _assert_envs_exist(strict_keys: set[str]) -> None:
         )
 
 
-def _source(source: str, strict_source: bool) -> Store:  # noqa: FBT001
+def _source(source: str, strict_source: bool) -> Store:  # ruff:ignore[boolean-type-hint-positional-argument]
     """Applies vars and assertions from source template ``.env`` file."""
     sourced: dict[str, str] = {}
     sourced.update(_parse(source))
@@ -103,7 +103,7 @@ def dump(
     prefixes: list[str] | None = None,
     strict_keys: set[str] | None = None,
     source: str = EMPTY_STRING,
-    strict_source: bool = False,  # noqa: FBT001, FBT002
+    strict_source: bool = False,  # ruff:ignore[boolean-type-hint-positional-argument, boolean-default-value-positional-argument]
 ) -> dict[str, str]:
     """
     This function is used to dump ``.env`` files.
