@@ -31,7 +31,7 @@ class TestParse:
 
     def test_parse_normal(self, env_file: str) -> None:
         """Ensures that given env keys are present in output."""
-        parsed_data = dumper._parse(env_file)  # noqa: SLF001
+        parsed_data = dumper._parse(env_file)  # ruff:ignore[private-member-access]
 
         assert isinstance(parsed_data, dict)
         assert 'NORMAL_KEY' in parsed_data
@@ -39,7 +39,7 @@ class TestParse:
 
     def test_parse_exceptions(self, env_file: str) -> None:
         """Ensures that unknown env keys are not present in output."""
-        parsed_data = dumper._parse(env_file)  # noqa: SLF001
+        parsed_data = dumper._parse(env_file)  # ruff:ignore[private-member-access]
 
         assert isinstance(parsed_data, dict)
         assert 'COMMENTED_KEY' not in parsed_data
