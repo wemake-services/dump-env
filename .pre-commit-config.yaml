@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.38.0
+    rev: c4654a7e007c9619a5eb63c39a456572a0fa1851  # frozen: 0.38.0
     hooks:
       - id: check-dependabot
       - id: check-github-workflows
@@ -8,45 +8,50 @@ repos:
       - id: check-readthedocs
 
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.12
+    rev: 914e7df21a07ef503a81201c76d2b11c789d3fca  # frozen: v1.7.12
     hooks:
       - id: actionlint
         additional_dependencies:
           - "github.com/wasilibs/go-shellcheck/cmd/shellcheck@latest"
 
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: v1.29.0
+    rev: 451b56af716f9f0d0c2b816503a3fd0cf8b036fa  # frozen: v1.29.0
     hooks:
       - id: zizmor
         args: ["--no-progress", "--fix"]
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.11.0.1
+    rev: a6564f5d57444e123433a5c9af733e3975c77229  # frozen: v0.11.0.1-1
     hooks:
       - id: shellcheck
         args: ["--severity=style"]
 
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: "67cd950188cc8e2611e9ac21d1b032fdd446c601"  # frozen: v2.28.0
+    hooks:
+      - id: pyproject-fmt
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.3
+    rev: aab412d509121cb5f7533134b7e67f9fab59c682  # frozen: v0.16.4
     hooks:
       - id: ruff
         args: ["--exit-non-zero-on-fix"]
       - id: ruff-format
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1
+    rev: 12ffd4a04b4893ab75db66a59aaad2d996c3e982  # frozen: v1
     hooks:
       - id: typos
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.3
+    rev: 57b21406f092110c18776e39b0bda50d37c945c8  # frozen: v2.4.3
     hooks:
     - id: codespell
       additional_dependencies:
         - tomli
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
