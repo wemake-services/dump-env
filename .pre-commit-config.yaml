@@ -27,7 +27,7 @@ repos:
         args: ["--severity=style"]
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: "67cd950188cc8e2611e9ac21d1b032fdd446c601"  # frozen: v2.28.0
+    rev: "cc0b0f8d4107cfe80d6571644e639b05aee29128"  # frozen: v2.28.1
     hooks:
       - id: pyproject-fmt
 
