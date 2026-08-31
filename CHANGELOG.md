@@ -3,6 +3,14 @@
 We follow semantic versioning.
 
 
+## 1.8.0
+
+### Features
+
+- Adds `--interpolate` CLI option to expand `${VAR}` references in values
+- Adds `--strict-interpolate` CLI option to fail on undefined or malformed references
+
+
 ## 1.7.0
 
 ### Features

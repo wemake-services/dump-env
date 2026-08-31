@@ -137,6 +137,52 @@ $ dump-env -t .env.template -p SECRET_ --no-quote-values > .env
 By default, `dump-env` quotes values with spaces and other special
 characters to preserve compatibility with .env parsers.
 
+
+### Interpolation
+
+You can expand `${VAR}` references between values with the `-i` or `--interpolate` flag:
+
+```bash
+$ cat .env.template
+DB_HOST=localhost
+DB_URL=postgresql://${DB_HOST}:5432/mydb
+```
+
+```bash
+$ dump-env -t .env.template -p SECRET_ENV_ --interpolate
+DB_HOST=localhost
+DB_URL=postgresql://localhost:5432/mydb
+```
+
+References are resolved after all sources are merged, so environment overrides are respected:
+
+```bash
+$ export SECRET_ENV_DB_HOST='db.internal'
+$ dump-env -t .env.template -p SECRET_ENV_ --interpolate
+DB_HOST=db.internal
+DB_URL=postgresql://db.internal:5432/mydb
+```
+
+Values are expanded once, in definition order. You need to define variables before referencing them.
+A reference to an unknown variable is kept as a literal `${VAR}`, and `$$` produces a literal `$`.
+
+Templates need no quoting: `${VAR}` is read from the file as-is.
+For shell `export`s, the quoting picks who expands the reference:
+
+```bash
+$ export DB_URL="postgresql://${DB_HOST}:5432/mydb"   # the shell expands it at export time
+$ export DB_URL='postgresql://${DB_HOST}:5432/mydb'   # dump-env expands it when it runs
+```
+
+Add `--strict-interpolate` to fail on undefined or malformed references:
+
+```bash
+$ export SECRET_ENV_APP_URL='https://${APP_DOMAIN}/api'
+$ dump-env -p SECRET_ENV_ --interpolate --strict-interpolate
+Unresolved references in: APP_URL ('APP_DOMAIN')
+```
+
+
 ## Creating secret variables in some CIs
 
 - [travis docs](https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-variables-in-.travis.yml)

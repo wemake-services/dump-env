@@ -4,7 +4,7 @@ requires = [ "poetry-core>=2" ]
 
 [tool.poetry]
 name = "dump-env"
-version = "1.7.0"
+version = "1.8.0"
 description = "A utility tool to create .env files"
 license = "MIT"
 authors = [ "Nikita Sobolev <mail@sobolevn.me>" ]

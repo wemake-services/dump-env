@@ -99,13 +99,24 @@ def _create_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         '--strict-source',
-        action='store_true',
+        action='store_true',  # noqa: WPS226
         help='All source template variables should exist in os envs',
     )
     parser.add_argument(
         '--no-quote-values',
         action='store_true',
         help='Do not quote values in the output',
+    )
+    parser.add_argument(
+        '-i',
+        '--interpolate',
+        action='store_true',
+        help='Expand ${VAR} references in values',
+    )
+    parser.add_argument(
+        '--strict-interpolate',
+        action='store_true',
+        help='Fail on undefined or malformed ${VAR} references',
     )
     return parser
 
@@ -173,6 +184,8 @@ def main() -> NoReturn:
             strict_vars,
             args.source,
             args.strict_source,
+            interpolate=args.interpolate,
+            strict_interpolate=args.strict_interpolate,
         )
     except StrictEnvError as exc:
         sys.stderr.write(f'{exc!s}\n')
