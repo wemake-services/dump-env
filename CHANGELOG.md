@@ -3,7 +3,7 @@
 We follow semantic versioning.
 
 
-## 1.8.0
+## Version 1.8.0
 
 ### Features
 
@@ -11,7 +11,7 @@ We follow semantic versioning.
 - Adds `--strict-interpolate` CLI option to fail on undefined or malformed references
 
 
-## 1.7.0
+## Version 1.7.0
 
 ### Features
 

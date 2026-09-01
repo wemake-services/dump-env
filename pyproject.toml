@@ -2,6 +2,7 @@
 build-backend = "poetry.core.masonry.api"
 requires = [ "poetry-core>=2" ]
 
+
 [tool.poetry]
 name = "dump-env"
 version = "1.8.0"
@@ -20,21 +21,32 @@ classifiers = [
   "Operating System :: OS Independent",
   "Typing :: Typed",
 ]
-dependencies.python = "^3.10"
-group.dev.dependencies.mypy = "^2.3"
-group.dev.dependencies.pytest = "^9.1"
-group.dev.dependencies.pytest-cov = "^7.1"
-group.dev.dependencies.pytest-randomly = "^4.1"
-group.dev.dependencies.python-dotenv = "^1.1"
-group.dev.dependencies.ruff = "^0.16"
-group.dev.dependencies.syrupy = "^5.5"
-group.dev.dependencies.wemake-python-styleguide = "^1.7"
-group.docs.optional = true
-group.docs.dependencies.furo = "^2025.12"
-group.docs.dependencies.myst-parser = "^4.0"
-group.docs.dependencies.sphinx = "^8.1"
-group.docs.dependencies.tomli = "^2.0"
-scripts.dump-env = "dump_env.cli:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^2.3"
+pytest = "^9.1"
+pytest-cov = "^7.1"
+pytest-randomly = "^4.1"
+python-dotenv = "^1.1"
+ruff = "^0.16"
+syrupy = "^5.5"
+wemake-python-styleguide = "^1.8"
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+furo = "^2025.12"
+myst-parser = "^4.0"
+sphinx = "^8.1"
+tomli = "^2.0"
+
+[tool.poetry.scripts]
+dump-env = "dump_env.cli:main"
+
 
 [tool.ruff]
 target-version = "py310"
@@ -42,9 +54,22 @@ line-length = 80
 # Ruff config: https://docs.astral.sh/ruff/settings
 preview = true
 fix = true
-format.quote-style = "single"
-format.docstring-code-format = false
-lint.select = [
+output-prefer-rule-codes = true
+
+[tool.ruff.format]
+quote-style = "single"
+docstring-code-format = false
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = [
+  "S101", # asserts
+  "S404", # subprocess
+  "S603", # subprocess
+  "S607", # subprocess partial path
+]
+
+[tool.ruff.lint]
+select = [
   "A",    # flake8-builtins
   "B",    # flake8-bugbear
   "C4",   # flake8-comprehensions
@@ -84,7 +109,7 @@ lint.select = [
   "W",    # pycodestyle
   "YTT",  # flake8-2020
 ]
-lint.ignore = [
+ignore = [
   "A005",    # allow to shadow stdlib and builtin module names
   "COM812",  # trailing comma, conflicts with `ruff format`
   # Different doc rules that we don't really care about:
@@ -106,18 +131,12 @@ lint.ignore = [
   "RUF201",  # keep old rule codes instead of verbose names
   "TRY003",  # long exception messages from `tryceratops`
 ]
-lint.per-file-ignores."tests/*.py" = [
-  "S101", # asserts
-  "S404", # subprocess
-  "S603", # subprocess
-  "S607", # subprocess partial path
-]
-lint.external = [ "WPS" ]
+external = [ "WPS" ]
 # Plugin configs:
-lint.flake8-quotes.inline-quotes = "single"
-lint.mccabe.max-complexity = 6
-lint.pydocstyle.convention = "google"
-output-prefer-rule-codes = true
+flake8-quotes.inline-quotes = "single"
+mccabe.max-complexity = 6
+pydocstyle.convention = "google"
+
 
 [tool.codespell]
 # codespell configuration: https://github.com/codespell-project/codespell
@@ -128,14 +147,25 @@ skip = [
   "_build",
 ]
 
-[tool.typos]
+
+[tool.pyproject-fmt]
+# Docs: https://pyproject-fmt.readthedocs.io/en/latest/configuration.html
+column_width = 80
+generate_python_version_classifiers = false
+table_format = "long"
+sub_table_spacing = "\n"
+separate_root_table = "\n\n"
+
+
+[tool.typos.files]
 # typos configuration: https://github.com/crate-ci/typos/
-files.extend-exclude = [
+extend-exclude = [
   "__pycache__",
   "_build",
   ".mypy_cache",
   "*.lock",
 ]
+
 
 [tool.mypy]
 warn_unreachable = true
@@ -156,9 +186,10 @@ strict_bytes = true
 # The mypy configurations: http://bit.ly/2zEl9WI
 strict = true
 
-[tool.pytest]
+
+[tool.pytest.ini_options]
 # pytest config: http://doc.pytest.org/en/latest/customize.html
-ini_options.norecursedirs = [
+norecursedirs = [
   "*.egg",
   ".eggs",
   ".git",
@@ -168,7 +199,7 @@ ini_options.norecursedirs = [
   "dist",
   "docs",
 ]
-ini_options.addopts = [
+addopts = [
   "--strict-config",
   "--strict-markers",
   "--doctest-modules",
@@ -184,10 +215,11 @@ ini_options.addopts = [
   "--cov-fail-under=100",
 ]
 # Strict `@xfail` by default:
-ini_options.xfail_strict = true
+xfail_strict = true
 # Fail on warnings:
-ini_options.filterwarnings = [ "error" ]
+filterwarnings = [ "error" ]
 
-[tool.coverage]
+
+[tool.coverage.run]
 # Covdefaults: https://pypi.org/project/covdefaults
-run.patch = [ "subprocess" ]
+patch = [ "subprocess" ]
