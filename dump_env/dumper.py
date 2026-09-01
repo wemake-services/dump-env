@@ -109,7 +109,6 @@ def _interpolate(store: dict[str, str], *, strict: bool) -> dict[str, str]:
 
     Args:
         store: Merged template and environment key-values.
-
         strict: Fail on undefined or malformed ${VAR} references
 
     Returns:
@@ -170,9 +169,7 @@ def dump(  # noqa: C901, WPS211
 
         strict_source: Whether all keys in source template must also be
            presented in env vars.
-
         interpolate: Expand ${VAR} references in values
-
         strict_interpolate: Fail on undefined or malformed ${VAR} reference
 
     Returns:
