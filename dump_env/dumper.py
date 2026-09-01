@@ -2,6 +2,7 @@ from collections import OrderedDict
 from collections.abc import Mapping
 from os import environ
 from pathlib import Path
+from string import Template
 from typing import Final
 
 from dump_env.exceptions import StrictEnvError
@@ -98,12 +99,52 @@ def _source(source: str, strict_source: bool) -> Store:  # ruff: ignore[boolean-
     return sourced
 
 
-def dump(
+def _interpolate(store: dict[str, str], *, strict: bool) -> dict[str, str]:
+    """
+    Expands ``${VAR}`` references in values using other keys of ``store``.
+
+    A reference to a key defined later or missing from the store
+    is kept as a literal ``${VAR}`` in the output.
+    Use ``$$`` to output a literal ``$``.
+
+    Args:
+        store: Merged template and environment key-values.
+        strict: Fail on undefined or malformed ${VAR} references
+
+    Returns:
+        The same store with all values expanded in place
+    """
+    failed: list[str] = []
+
+    for env_name, env_value in store.items():
+        template: Template = Template(env_value)
+
+        if strict:
+            try:
+                store[env_name] = template.substitute(store)
+            except (KeyError, ValueError) as exc:
+                failed.append(f'{env_name} ({exc})')
+                store[env_name] = template.safe_substitute(store)
+        else:
+            store[env_name] = template.safe_substitute(store)
+
+    if failed:
+        raise StrictEnvError(
+            'Unresolved references in: {}'.format(', '.join(failed)),
+        )
+
+    return store
+
+
+def dump(  # noqa: C901, WPS211
     template: str = EMPTY_STRING,
     prefixes: list[str] | None = None,
     strict_keys: set[str] | None = None,
     source: str = EMPTY_STRING,
     strict_source: bool = False,  # ruff: ignore[boolean-type-hint-positional-argument, boolean-default-value-positional-argument]
+    *,
+    interpolate: bool = False,
+    strict_interpolate: bool = False,
 ) -> dict[str, str]:
     """
     This function is used to dump ``.env`` files.
@@ -128,6 +169,8 @@ def dump(
 
         strict_source: Whether all keys in source template must also be
            presented in env vars.
+        interpolate: Expand ${VAR} references in values
+        strict_interpolate: Fail on undefined or malformed ${VAR} reference
 
     Returns:
         Ordered key-value pairs of dumped env and template variables.
@@ -155,6 +198,10 @@ def dump(
     # Loading env variables from `os.environ`:
     for prefix in prefixes:
         store.update(_preload_existing_vars(prefix))
+
+    # Expand ${VAR} references in values
+    if interpolate:
+        store = _interpolate(store, strict=strict_interpolate)
 
     # Sort keys and keep them ordered:
     return OrderedDict(sorted(store.items()))
