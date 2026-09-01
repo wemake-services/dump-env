@@ -10,12 +10,16 @@ def test_interpolate(
     monkeypatch: pytest.MonkeyPatch,
     delegator: 'DelegatorFactory',
 ) -> None:
-    """Check that cli expands ${VAR} references between values."""
+    """Check that cli expands ${VAR} and $VAR references between values."""
     monkeypatch.setenv('SOME_TT_HOST', 'localhost')
-    monkeypatch.setenv('SOME_TT_URL', '${HOST}:123/${MISSING_VALUE}')
+    monkeypatch.setenv('SOME_TT_URL1', '${HOST}:123/${MISSING_VALUE}')
+    monkeypatch.setenv('SOME_TT_URL2', '$HOST:123/$MISSING_VALUE')
+    monkeypatch.setenv('SOME_TT_URL3', '${HOST}_SUFFIX:$HOST_SUFFIX')
 
     variables = delegator('dump-env -p SOME_TT_ --interpolate')
-    assert variables == 'HOST=localhost\nURL=localhost:123/${MISSING_VALUE}\n'
+    assert 'URL1=localhost:123/${MISSING_VALUE}\n' in variables
+    assert 'URL2=localhost:123/$MISSING_VALUE\n' in variables
+    assert 'URL3=localhost_SUFFIX:$HOST_SUFFIX\n' in variables
 
 
 def test_strict_interpolate_missing(

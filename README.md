@@ -166,6 +166,12 @@ DB_URL=postgresql://db.internal:5432/mydb
 Values are expanded once, in definition order. You need to define variables before referencing them.
 A reference to an unknown variable is kept as a literal `${VAR}`, and `$$` produces a literal `$`.
 
+`$VAR` and `${VAR}` are equivalent - they both expand the variable `VAR`.
+Braces are required when the text directly after the reference would otherwise be read as part
+of the variable name:
+`${HOST}_SUFFIX` expands `HOST` and appends `_SUFFIX`,
+while `$HOST_SUFFIX` is a reference to a single variable named `HOST_SUFFIX`.
+
 Templates need no quoting: `${VAR}` is read from the file as-is.
 For shell `export`s, the quoting picks who expands the reference:
 
