@@ -32,7 +32,7 @@ pytest-cov = "^7.1"
 pytest-randomly = "^4.1"
 python-dotenv = "^1.1"
 ruff = "^0.16"
-syrupy = "^5.5"
+syrupy = ">=5.5,<7.0"
 wemake-python-styleguide = "^1.8"
 
 [tool.poetry.group.docs]
