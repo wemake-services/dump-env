@@ -31,7 +31,7 @@ pytest = "^9.1"
 pytest-cov = "^7.1"
 pytest-randomly = ">=4.1,<6.0"
 python-dotenv = "^1.1"
-ruff = "^0.16"
+ruff = ">=0.16,<0.18"
 syrupy = ">=5.5,<7.0"
 wemake-python-styleguide = "^1.8"
 
