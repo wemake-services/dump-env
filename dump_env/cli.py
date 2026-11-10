@@ -187,7 +187,7 @@ def main() -> NoReturn:
             interpolate=args.interpolate,
             strict_interpolate=args.strict_interpolate,
         )
-    except StrictEnvError as exc:
+    except (StrictEnvError, OSError) as exc:
         sys.stderr.write(f'{exc!s}\n')
         sys.exit(1)
     else:
